@@ -469,8 +469,12 @@ function updateRoute(){
   $('indiaTitle').textContent='EU authorisation + GAICT if eligible';
   $('indiaDesc').textContent='India’s GAICT is limited to eligible SCOMET Category 8 items, destinations and conditions; it is not a bilateral licence.';
  }else{
-  $('controlTitle').textContent=c.control;$('controlDesc').textContent=c.controlDesc;
-  $('indiaTitle').textContent=c.india;$('indiaDesc').textContent=c.indiaDesc;
+  $('originTitle').textContent=c.origin;
+  $('originDesc').textContent=c.originDesc;
+  $('controlTitle').textContent=c.control;
+  $('controlDesc').textContent=c.controlDesc;
+  $('indiaTitle').textContent=c.india;
+  $('indiaDesc').textContent=c.indiaDesc;
  }
 }
 function pct(n){return Number(n).toFixed(1)+'%'}
@@ -783,7 +787,6 @@ function updateFinancials(){
  $('fxLossEur').textContent=formatMoneyM(-current.fx.netFxImpact);
  $('fxLossRate').textContent='Delayed rate: ₹'+current.fx.delayedRate.toFixed(2)+' / € · INR cost offset: '+formatMoneyM(current.fx.inrCostTranslationBenefit)+' · hedge roll: '+formatMoneyM(current.fx.hedgeRollCost)+' over '+current.fx.rollMonths+' month(s)';
  $('waccLossEur').textContent='−€'+current.waccCost.toFixed(2)+'M';
- $('waccLossEur').title='Funding gap: '+formatMoneyM(current.scenarioFundingGapEurM)+' after phase multiplier '+phaseMultiplier.toFixed(2)+'× and explicit JV partner cash funding share '+(current.partnerCapitalOffsetShare*100).toFixed(0)+'%.';
  $('waccLossEur').title='Funding gap: '+formatMoneyM(current.scenarioFundingGapEurM)+' after phase multiplier '+phaseMultiplier.toFixed(2)+'× and explicit JV partner cash funding share '+(current.partnerCapitalOffsetShare*100).toFixed(0)+'%.';
  $('ldCostEur').textContent='−€'+(current.ldCost+current.expediteCost).toFixed(2)+'M';
  $('jvCostEur').textContent='−€'+current.jvLoss.toFixed(2)+'M';
