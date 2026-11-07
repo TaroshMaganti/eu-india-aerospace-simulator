@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="version" content="2.7.1"><meta name="description" content="EU–India aerospace dual-use regulatory interoperability and DAP 2020 indigenous-content compliance simulator by Tarosh Venkata Maganti.">
+<title>EU–India Dual-Use | Regulatory Orientation, DAP IC & Economic Scenario Simulator v2.7.1</title>
+<style>
+:root{--bg:#091321;--panel:#111e30;--panel2:#172840;--line:#2a405a;--text:#eaf1fa;--muted:#9fb2c9;--teal:#5bd8c8;--amber:#f1bb6d;--red:#f17f83;--blue:#8dbbff;--green:#78dbb7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#14253a 0%,var(--bg) 58%);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:#a8d5ff;text-decoration:none}a:hover{text-decoration:underline}
+header{padding:28px clamp(16px,4vw,56px) 22px;border-bottom:1px solid var(--line);background:#0a1524ed}
+.eyebrow{color:var(--teal);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:750}
+h1{font-size:clamp(25px,4vw,39px);line-height:1.1;margin:9px 0 8px;max-width:1050px;letter-spacing:-.025em}.sub{color:var(--muted);max-width:980px}
+.byline{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}.author{font-weight:700}.credentials{font-size:12px;color:var(--muted)}
+.download{display:inline-flex;align-items:center;gap:8px;margin-left:auto;padding:9px 13px;border-radius:8px;background:#18394b;border:1px solid #2a6372;color:#d6fff9;font-weight:650;font-size:12px}
+.wrap{padding:22px clamp(14px,4vw,56px) 42px;max-width:1540px;margin:auto}.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:15px}
+.card{background:linear-gradient(155deg,var(--panel),#0e1929);border:1px solid var(--line);border-radius:13px;padding:17px;min-width:0;box-shadow:0 8px 26px #00000013}
+.kpi small,.muted{color:var(--muted)}.kpi strong{display:block;font-size:27px;margin-top:6px;letter-spacing:-.035em}.kpi .tag{font-size:11px;color:var(--teal)}
+.two{grid-template-columns:1.22fr .78fr}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:0 0 7px}p{margin:7px 0}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:stretch;margin-top:16px}
+.node{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--panel2);position:relative;min-height:144px}.node:not(:last-child):after{content:"→";position:absolute;right:-11px;top:42%;color:var(--teal);font-size:18px;z-index:2}.node .n{font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase}.node p{font-size:12px;color:var(--muted);margin:7px 0}
+.flag{display:inline-block;border-radius:5px;padding:3px 7px;font-size:10px;font-weight:750;background:#512a32;color:#ffb4b6}.flag.amber{background:#49391f;color:#ffd28d}.flag.green{background:#123b38;color:#8ce9d9}.flag.blue{background:#203b58;color:#b5d5ff}
+select,input{background:#0a1422;border:1px solid #344963;color:var(--text);padding:9px;border-radius:7px;width:100%;font:inherit}input[type=range]{padding:0;accent-color:var(--teal)}
+label{display:block;color:var(--muted);font-size:12px;margin:12px 0 5px}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:end}
+.controls>div{min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
+.controls>div>label{min-height:32px;display:flex;align-items:flex-end;line-height:1.3;margin:12px 0 6px}
+.controls select{width:100%;min-width:0;height:42px;min-height:42px;line-height:1.25}
+.controls>div>.muted{margin-top:7px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:9px 7px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:650}.highlight{background:#172e41}
+.note{border-left:3px solid var(--amber);padding:10px 12px;background:#241f19;color:#ead9c0;border-radius:0 7px 7px 0;font-size:12px;margin-top:12px}.note.red{border-color:var(--red);background:#281b25;color:#f2c6c8}.note.green{border-color:var(--green);background:#132722;color:#c5f1e2}
+.metric{font-size:23px;font-weight:780;letter-spacing:-.035em}.metric.status{font-size:13px;letter-spacing:0}.bar{height:9px;background:#26384f;border-radius:20px;overflow:hidden;margin:7px 0 4px}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));width:50%;transition:width .15s}
+.small{font-size:11px}.sliderrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}.sliderrow output{font-weight:750;font-variant-numeric:tabular-nums;color:#d9eaff;min-width:52px;text-align:right}.calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.result{border:1px solid var(--line);border-radius:10px;padding:13px;background:#101c2b}.result h3{font-size:12px;color:var(--muted)}.result .metric{margin:4px 0}.pill{display:inline-block;padding:3px 8px;border-radius:20px;background:#1b3045;color:#b9d9ff;font-size:10px;margin:2px}
+
+.preset-panel{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid #356477;background:linear-gradient(120deg,#122b3b,#142238);border-radius:10px;padding:13px 14px;margin:12px 0 14px}
+.preset-panel strong{display:block;color:#d9fff8;font-size:13px}
+.preset-panel p{margin:4px 0 0;color:var(--muted);font-size:11px;max-width:820px}
+.preset-actions{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:5;pointer-events:auto}
+.preset-btn{position:relative;z-index:6;pointer-events:auto;touch-action:manipulation;border:1px solid #398b88;background:#174b4a;color:#e4fffa;border-radius:7px;padding:9px 12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.preset-btn.secondary{border-color:#398b88;background:#174b4a;color:#e4fffa}
+.preset-btn.is-selected{background:#d7f3ed;border-color:#d7f3ed;color:#103b38;box-shadow:0 0 0 2px rgba(215,243,237,.22)}
+.preset-btn:focus-visible{outline:2px solid #d7f3ed;outline-offset:3px}
+.preset-btn:hover{filter:brightness(1.12)}
+.preset-status{grid-column:1/-1;color:#a8d5ff;font-size:11px}
+@media(max-width:700px){.preset-panel{grid-template-columns:1fr}.preset-actions{display:grid;grid-template-columns:1fr 1fr}.preset-btn{width:100%}}
+.financial-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.geo-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.geo-foot{font-size:11px;color:var(--muted);margin-top:12px}.geo-note{border-left:3px solid var(--amber);background:#241f19;color:#ead9c0;border-radius:0 7px 7px 0;padding:10px 12px;font-size:12px;margin-top:12px}.geo-output .metric{overflow-wrap:anywhere}.financial-kpi{border:1px solid var(--line);border-radius:10px;padding:13px;background:#101c2b;min-width:0}.financial-kpi h3{font-size:12px;color:var(--muted)}.financial-kpi .metric{margin:5px 0}.financial-kpi .small{color:var(--muted)}.financial-assumptions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.financial-result{border:1px solid var(--line);border-radius:10px;padding:14px;background:#101c2b}.decision-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.decision-tile{border:1px solid var(--line);border-radius:10px;padding:12px;background:#101c2b;min-width:0}.decision-tile h3{font-size:12px;color:var(--muted)}.decision-tile .metric{font-size:21px}.conditional-field[hidden]{display:none!important}.financial-result .metric{font-size:26px}.financial-foot{font-size:11px;color:var(--muted);margin-top:12px}.sponsor{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.sponsor .stat{background:#142438;border:1px solid var(--line);border-radius:10px;padding:12px}.sponsor .stat strong{font-size:23px;display:block;margin-top:5px}.sponsor .stat span{font-size:11px;color:var(--muted)}
+details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;color:#c6d7e9;font-weight:650}
+footer{color:var(--muted);font-size:11px;padding:18px 0 3px;border-top:1px solid var(--line);margin-top:20px}.footerbrand{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.footerbrand strong{color:#dbe8f7}
+@media(max-width:1050px){.flow{grid-template-columns:1fr}.node{min-height:auto}.node:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-18px}.two,.three,.four{grid-template-columns:1fr 1fr}}
+@media(max-width:1050px){.financial-kpis,.geo-kpis{grid-template-columns:1fr 1fr}.decision-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.controls>div>label{min-height:0}.controls select{height:42px}.kpis{grid-template-columns:repeat(2,1fr)}.two,.three,.four{grid-template-columns:1fr}.controls,.calcgrid,.financial-assumptions{grid-template-columns:1fr}.financial-kpis{grid-template-columns:1fr 1fr}.decision-grid{grid-template-columns:1fr}.download{margin-left:0}.sponsor{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header>
+ <div class="eyebrow">Regulatory Interoperability &amp; DAP 2020 Compliance Simulator</div>
+ <h1>EU–India Dual-Use Aerospace Supply Chain</h1>
+ <div class="sub">An interactive analytical companion to <i>Navigating Friction in Strategic Corridors</i>. It maps regulatory interfaces, separates software from development technology, and models how lower-tier foreign-content assumptions can affect contract-level indigenous-content compliance.</div>
+ <div class="byline"><div><div class="author">Tarosh Venkata Maganti</div><div class="credentials">Independent researcher in defense-industrial policy, technology transfer, and geoeconomic risk analysis. Worked at DRDO with technical operations experience spanning BHEL and Indian Railways and start-ups. B.Tech, Mechanical Engineering (Andhra University).</div></div>
+  <a class="download" href="Navigating%20Friction%20in%20Strategic%20Corridors%20EU-India.pdf" download="Navigating Friction in Strategic Corridors EU-India.pdf">↓ Download full policy brief (PDF)</a>
+ </div>
+</header>
+<main class="wrap">
+<section class="grid kpis">
+ <div class="card kpi"><small>Regulatory corridors assessed</small><strong>5</strong><span class="tag">Four friction areas + standards layer</span></div>
+ <div class="card kpi"><small>Standards alignment</small><strong>Selected</strong><span class="tag">Identical adoptions do not equal certification</span></div>
+ <div class="card kpi"><small>Certification recognition</small><strong>Limited</strong><span class="tag">Narrow, non-reciprocal arrangement</span></div>
+ <div class="card kpi"><small>Policy proposals</small><strong>3</strong><span class="tag">Licensing · assurance · localisation</span></div>
+</section>
+
+<section class="grid two">
+ <div class="card">
+  <h2>01 / Regulatory orientation (non-determinative)</h2>
+  <div class="controls">
+   <div><label for="component">Illustrative component / technology family</label><select id="component"><option value="turbine">Gas-turbine engine technology</option><option value="fadec">FADEC control-law software</option><option value="cooling">Turbine cooling-hole / metallurgy technology</option><option value="fastener">Standard hardware / fasteners (IS 13153:2024)</option></select></div>
+   <div><label for="route">Transfer direction</label><select id="route"><option value="euin">EU → India (EU export authorisation)</option><option value="ineu">India → EU (SCOMET / GAICT eligibility)</option><option value="intra">Intra-group recurring transfer</option></select></div>
+  </div>
+  <div class="controls" style="margin-top:8px">
+   <div id="pilotApplicationWrap" class="conditional-field" hidden>
+    <label for="pilotApplication">Fastener application screen for DGAQA pilot</label>
+    <select id="pilotApplication"><option value="notChecked" selected>Not assessed</option><option value="eligible">Screened as non-safety-critical, build-to-print hardware</option><option value="excluded">Safety-critical / excluded application</option></select>
+    <span class="muted small">This is an application screen, not DGAQA approval. Intended use, failure consequence and DGAQA decision still govern.</span>
+   </div>
+  </div>
+  <div class="flow">
+   <div class="node"><div class="n">01 · Origin</div><h3 id="originTitle">EU exporter / design authority</h3><p id="originDesc">Classify the item, software or technology; determine jurisdiction and control status.</p><span class="pill">Classification</span></div>
+   <div class="node"><div class="n">02 · Export-control</div><h3 id="controlTitle">EU dual-use regime</h3><p id="controlDesc">EU Regulation 2021/821; electronic transfer can constitute an export.</p><span class="flag">Chokepoint A</span></div>
+   <div class="node"><div class="n">03 · Indian interface</div><h3 id="indiaTitle">SCOMET / DGFT</h3><p id="indiaDesc">Check the current SCOMET entry, destination, end use and authorisation pathway.</p><span class="flag">Chokepoint B</span></div>
+   <div class="node"><div class="n">04 · Industrial assurance</div><h3 id="assuranceTitle">DGAQA / AFQMS</h3><p id="assuranceDesc">Government approval and surveillance remain distinct from supplier certification.</p><span id="pilotBadge" class="flag amber">Potentially eligible, subject to conditions</span></div>
+   <div class="node"><div class="n">05 · Procurement</div><h3 id="procurementTitle">DAP 2020 / Indigenous content</h3><p id="procurementDesc">A qualifying “Others” spend may attract the 90% estimated foreign-content treatment in the contract IC calculation.</p><span id="procurementBadge" class="flag amber">Contract-level IC effect</span></div>
+  </div>
+  <div class="note" id="routeNote">Classification is a technical and legal determination. A control-list crosswalk does not itself grant an export authorisation.</div>
+ </div>
+ <div class="card">
+  <h2>Illustrative candidate control-list mapping — not a classification determination</h2>
+  <p class="muted small">Entries below distinguish FADEC software from FADEC development technology. The list is an orientation aid, not a classification decision for a specific item.</p>
+  <table><thead><tr><th>Control subject</th><th>Wassenaar</th><th>EU Reg. 2021/821</th><th>India SCOMET 2025</th></tr></thead><tbody>
+   <tr id="rowTurbine"><td>Gas-turbine engine items</td><td>9.A.1</td><td>9A001</td><td>8A901*</td></tr>
+   <tr id="rowSoftware"><td>FADEC software</td><td>9.D.3</td><td>9D003</td><td>8D903</td></tr>
+   <tr id="rowTech"><td>FADEC development / production technology</td><td>9.E.3.h</td><td>9E003.h</td><td>8E903.h</td></tr>
+   <tr id="rowCooling"><td>Cooling-hole / metallurgy technology</td><td>9.E.3.c / 9.E.3.h</td><td>9E003.c / 9E003.h</td><td>8E903.c / 8E903.h*</td></tr>
+  </tbody></table>
+  <div class="note green"><b>Classification distinction:</b> India 8A901 is conditional on the stated engine technology criteria; 8E903.c and 8E903.h have their own technical thresholds. The following are candidate mappings only.  FADEC software is classified in Group D. FADEC development / production technology is classified in Group E. The Indian list similarly separates 8D903 software from 8E903.h technology. These are candidate mappings only; confirm exact technical parameters, exclusions, list version, destination, end use and national implementation.</div>
+  <p class="muted small">The SCOMET 2025 list was notified on 23 September 2025 and came into force 30 days later. Verify current amendments and full entry notes before use.</p>
+ </div>
+</section>
+
+<section class="grid two" style="margin-top:14px">
+ <div class="card">
+  <h2>02 / Institutional friction register</h2>
+  <table><thead><tr><th>Corridor</th><th>Alignment in brief</th><th>Existing instrument / gap</th></tr></thead><tbody>
+   <tr><td>Industrial localisation</td><td><span class="flag">Low</span></td><td>Parallel, non-recognising targets; no mutual recognition</td></tr>
+   <tr><td>Export-control taxonomy</td><td><span class="flag amber">Moderate</span></td><td>Coverage overlaps; taxonomy differs; case-by-case mapping</td></tr>
+   <tr><td>Certification / QA</td><td><span class="flag">Low</span></td><td>EASA–DGCA arrangement is narrow: one civil type / one site</td></tr>
+   <tr><td>Institutional access</td><td><span class="flag">None</span></td><td>India has no EDA Administrative Arrangement</td></tr>
+   <tr><td>Technical standards</td><td><span class="flag green">High*</span></td><td>Selected BIS adoptions identical to ISO source; not certification equivalence</td></tr>
+  </tbody></table>
+  <p class="muted small">*High only for selected adopted standards; it does not establish equivalent certification, production capability or regulator-to-regulator acceptance.</p>
+ </div>
+ <div class="card">
+  <h2>Swedish industrial exposure / Saab context</h2>
+  <p class="muted small">Figures reproduced from page 4 of the policy brief. They contextualise potential exposure; they do not prove a specific regulatory barrier caused a Saab commercial outcome.</p>
+  <div class="sponsor">
+   <div class="stat"><span>Investor AB stake in Saab</span><strong>30.2%</strong><span>of capital</span><strong style="font-size:18px">39.7% votes</strong></div>
+   <div class="stat"><span>Saab India Technologies</span><strong>100%</strong><span>wholly owned</span></div>
+   <div class="stat"><span>HAL platform import content</span><strong>40–60%</strong><span>by value</span></div>
+  </div>
+  <div class="note">The brief characterises the Saab connection as an analytical inference from disclosed enterprise risks and the broader regulatory structure—not evidence that a named Saab shipment, contract or production decision was affected.</div>
+ </div>
+</section>
+
+<section class="card" style="margin-top:14px" id="icSimulator">
+ <h2>03 / DAP 2020 compliance scenario (evidence-gated)</h2>
+ <p class="muted small">Calculate the “Others” presumption against the applicable DAP category and base. The model uses the contract's Base Contract Price (less taxes and duties) and isolates the Make portion where the category requires it.</p>
+ <div class="note amber"><b>Rule-version control:</b> this calculator models DAP 2020. The latest official notice located for this build is the Ministry of Defence’s 10 February 2026 consultation on a draft DAP 2026, which stated that the new procedure would replace DAP 2020 once approved. Confirm whether a later notification or a tender-specific provision now applies before using the calculations for a live bid. <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2226097&amp;lang=2&amp;reg=48" target="_blank" rel="noopener">Read the MoD / PIB notice.</a></div>
+ <div class="controls">
+  <div>
+   <label for="category">Procurement category</label>
+   <select id="category">
+    <option value="iddm">Buy (Indian-IDDM) — 50% minimum</option>
+    <option value="buyIndianDesign">Buy (Indian), indigenous design — 50% minimum</option>
+    <option value="buyIndianOther" selected>Buy (Indian), non-indigenous design — 60% minimum</option>
+    <option value="buyMake">Buy &amp; Make (Indian) — 50% of Make portion</option>
+    <option value="globalMake">Buy (Global — Manufacture in India) — 50% of Buy + Make value</option>
+    <option value="globalIndian">Buy (Global), Indian vendor — 30% minimum</option>
+    <option value="globalForeign">Buy (Global), foreign vendor — no IC minimum under DAP category</option>
+   </select>
+   <div class="conditional-field" id="makePortionWrap" hidden>
+    <label for="makePortion">Make portion as share of total base contract price (%)</label>
+    <div class="sliderrow"><input id="makePortion" type="range" min="1" max="100" value="60" step="1"><output id="makePortionOut">60%</output></div>
+   </div>
+   <label for="offsetScreen">Buy (Global) offset-screen status</label>
+   <select id="offsetScreen"><option value="notApplicable" selected>Not assessed / category not selected</option><option value="threshold">AoN cost ≥ ₹2,000 Cr — assess offset obligation</option><option value="exception">Potential exception applies — verify legal basis</option><option value="below">Below stated AoN cost trigger</option></select>
+   <p class="muted small">Indicative screen only. Verify the applicable DAP paragraph, AoN cost, procurement route and exceptions; this does not calculate offset obligations.</p>
+   <label for="vendorEligibility">Indian-vendor / RFP eligibility review</label>
+   <select id="vendorEligibility"><option value="notChecked" selected>Not yet verified against RFP</option><option value="confirmed">Confirmed by procurement / legal team</option><option value="notEligible">Not eligible for selected category</option></select>
+   <label for="thresholdSource">IC threshold source</label>
+   <select id="thresholdSource"><option value="category" selected>DAP category default</option><option value="contract">Contract-specific RFP / AoN-approved threshold</option></select>
+   <div class="conditional-field" id="customThresholdWrap" hidden>
+    <label for="customThreshold">Approved contract-specific IC threshold (%)</label>
+    <input id="customThreshold" type="number" min="0" max="100" value="50" step="0.5">
+   </div>
+   <label for="contractValue">Gross contract value (₹ crore, before DAP IC-base exclusions)</label>
+   <input id="contractValue" type="number" min="0.1" max="100000" step="0.1" value="900">
+   <label for="taxDuties">Taxes and duties excluded from BCP (₹ crore)</label>
+   <input id="taxDuties" type="number" min="0" max="100000" step="0.1" value="0">
+   <label for="bneExcluded">BNE excluded from IC base, where applicable (₹ crore)</label>
+   <input id="bneExcluded" type="number" min="0" max="100000" step="0.1" value="0">
+   <label for="supportExcluded">AMC / CMC / after-sales support excluded, where applicable (₹ crore)</label>
+   <input id="supportExcluded" type="number" min="0" max="100000" step="0.1" value="0">
+   <p class="muted small">The calculator subtracts taxes/duties, BNE and AMC/CMC/after-sales amounts entered here to derive an indicative IC base. DAP category-specific treatment matters: BNE is excluded where applicable, and AMC/CMC/after-sales support is excluded in the relevant IC proforma. Confirm the RFP and the exact contract-price definition before use. The separate 5% payment-hold calculation uses gross contract value, not this adjusted IC base.</p>
+   <label for="tierSupplierValue">Aggregated value of this tier supplier’s contracts linked to the prime contract (₹ crore)</label>
+   <input id="tierSupplierValue" type="number" min="0" max="100000" step="0.1" value="8">
+   <label for="pwbgAmount">Performance-cum-Warranty Bank Guarantee (PWBG) amount (₹ lakh)</label>
+   <input id="pwbgAmount" type="number" min="0" max="100000" step="1" value="100">
+  </div>
+  <div>
+   <label for="docForeign">Documented spend: foreign-content share (%)</label>
+   <div class="sliderrow"><input id="docForeign" type="range" min="0" max="100" value="25"><output id="docForeignOut">25%</output></div>
+   <label for="othersShare">“Others” spend as share of the relevant IC calculation base (%)</label>
+   <div class="sliderrow"><input id="othersShare" type="range" min="0" max="100" value="30"><output id="othersShareOut">30%</output></div>
+   <label for="verifiedForeign">Evidence-backed foreign share within “Others” (%)</label>
+   <div class="sliderrow"><input id="verifiedForeign" type="range" min="0" max="100" value="35"><output id="verifiedForeignOut">35%</output></div>
+   <label for="replacementSource">Which spend is the replacement supplier displacing?</label>
+   <select id="replacementSource"><option value="others" selected>DAP “Others” spend (90% estimated foreign)</option><option value="documented">Documented spend (use entered documented foreign share)</option></select>
+   <label for="domesticPremium">Incremental domestic-sourcing price premium (%)</label>
+   <div class="sliderrow"><input id="domesticPremium" type="range" min="0" max="50" value="10" step="1"><output id="domesticPremiumOut">10%</output></div>
+   <label for="localSupplierForeign">Foreign-content share of replacement Indian supplier's price (%)</label>
+   <div class="sliderrow"><input id="localSupplierForeign" type="range" min="0" max="100" value="25" step="5"><output id="localSupplierForeignOut">25%</output></div>
+   <label for="nreQualificationCost">Non-recurring engineering, first-article inspection, qualification and ToT onboarding cost (€M)</label>
+   <input id="nreQualificationCost" type="number" min="0" max="1000" value="2.0" step="0.1">
+   <p class="muted small">One-time scenario cost when physical local sourcing is selected. Obtain supplier / qualification quotes; this is not a market benchmark and does not imply that safety-critical substitution is technically or regulatorily permissible.</p>
+   <label for="evidenceRoute">“Others” evidence route</label>
+   <select id="evidenceRoute"><option value="none" selected>No accepted route selected</option><option value="dapImport">Existing DAP Appendix B para. 5 import-certification provision</option><option value="enhanced">Proposed enhanced supplier-level evidence protocol</option></select>
+   <label for="evidenceRouteStatus">Evidence-route status</label>
+   <select id="evidenceRouteStatus"><option value="notSubmitted" selected>Not submitted / not confirmed</option><option value="submitted">Submitted; decision pending</option><option value="accepted">Accepted by competent procurement authority</option></select>
+   <p class="muted small">Selecting an existing provision does not establish that a particular record qualifies. The enhanced protocol is a proposal, not an existing entitlement.</p>
+   <label for="indianMfgShare">Claimed qualifying Indian-manufactured materials, components and software (% of IC calculation base)</label>
+   <div class="sliderrow"><input id="indianMfgShare" type="range" min="0" max="100" value="0" step="1"><output id="indianMfgShareOut">0%</output></div>
+   <label for="indianMfgEvidence">Evidence quality for Indian-manufacture value</label>
+   <select id="indianMfgEvidence"><option value="none" selected>No evidence supplied</option><option value="estimate">User estimate only</option><option value="supplier">Supplier declaration / records supplied</option><option value="audited">Independently audited / substantiated</option><option value="accepted">Accepted by competent procurement authority</option></select>
+   <label for="localIndianMfgShare">Qualifying Indian-manufactured share of replacement supplier price (%)</label>
+   <div class="sliderrow"><input id="localIndianMfgShare" type="range" min="0" max="100" value="75" step="5"><output id="localIndianMfgShareOut">75%</output></div>
+   <div class="note amber">Separate DAP 2020 sub-test introduced by the 2024 amendment: at least 50% of the stipulated IC requirement must itself be met through Indian-manufactured materials, components or software. User-entered percentages are claims, not evidence. Only authority-accepted values support a positive compliance conclusion in this tool; audited-but-unaccepted values remain provisional.</div>
+   <label for="verificationCost">Per-contract verification / assurance cost if the authorised evidence route is available (₹ lakh)</label>
+   <input id="verificationCost" type="number" min="0" max="100000" step="1" value="100">
+   <div class="note">The 90% estimate applies to the DAP-defined “Others” bucket. The verification cost and domestic sourcing premium are editable planning assumptions, not published market benchmarks. Replace them with supplier quotes and an audit proposal.</div>
+  </div>
+ </div>
+ <div class="decision-grid">
+  <div class="decision-tile"><h3>IC calculation base</h3><div class="metric" id="icBaseValue">₹900.0 Cr</div><span class="muted small" id="icBaseNote">Full Base Contract Price</span></div>
+  <div class="decision-tile"><h3>Applicable IC threshold</h3><div class="metric" id="threshold">60.0%</div><span class="muted small" id="categoryLabel">Buy (Indian), non-indigenous design</span></div>
+  <div class="decision-tile"><h3>“Others” spend to review</h3><div class="metric" id="othersSpendValue">₹270.0 Cr</div><span class="muted small">Spend currently subject to 90% estimate</span></div>
+  <div class="decision-tile"><h3>Vendor / RFP eligibility gate</h3><div class="metric" id="vendorEligibilityStatus">Not checked</div><span class="muted small">Separate from the IC arithmetic below</span></div>
+  <div class="decision-tile"><h3>Indian-manufacture sub-test</h3><div class="metric" id="indianMfgStatus">Unknown</div><span class="muted small" id="indianMfgNote">Evidence and acceptance status govern</span></div>
+  <div class="decision-tile"><h3>Evidence-route status</h3><div class="metric" id="evidenceRouteStatusOut">Not confirmed</div><span class="muted small" id="evidenceRouteNote">Existing provision and proposed protocol are distinguished</span></div>
+ </div>
+ <div class="decision-grid">
+  <div class="decision-tile"><h3>Minimum Indian-manufactured value required</h3><div class="metric" id="indianMfgRequired">₹270.0 Cr</div><span class="muted small">50% of stipulated IC requirement</span></div>
+  <div class="decision-tile"><h3>Entered qualifying Indian-manufactured value</h3><div class="metric" id="indianMfgValue">₹0.0 Cr</div><span class="muted small">Based on entered share of IC calculation base</span></div>
+  <div class="decision-tile"><h3>Shortfall against Indian-manufacture sub-test</h3><div class="metric" id="indianMfgGap">₹270.0 Cr</div><span class="muted small">Calculated from entered value; not itself proof of failure</span></div>
+  <div class="decision-tile"><h3>Potential Indian-manufacture value from local sourcing</h3><div class="metric" id="localSourcingMfgValue">₹0.0 Cr</div><span class="muted small" id="localSourcingMfgNote">Scenario only; not authority-accepted</span></div>
+  <div class="decision-tile"><h3>Sub-test gap after sourcing assumption</h3><div class="metric" id="indianMfgGapAfterSourcing">₹270.0 Cr</div><span class="muted small">Sensitivity only; requires supplier evidence and authority acceptance</span></div>
+  <div class="decision-tile"><h3>Overall compliance state</h3><div class="metric" id="overallComplianceState">Undetermined</div><span class="muted small" id="overallComplianceNote">Depends on RFP eligibility and accepted evidence</span></div>
+ </div>
+ <div class="decision-grid">
+  <div class="decision-tile"><h3>DAP tier-vendor reporting threshold</h3><div class="metric" id="tierReportingThreshold">₹10.0 Cr</div><span class="muted small">Lower of ₹10 Cr or 5% of prime Base Contract Price</span></div>
+  <div class="decision-tile"><h3>Selected supplier reporting test</h3><div class="metric" id="tierReportingStatus">Below threshold</div><span class="muted small" id="tierReportingNote">Aggregated value of related contracts</span></div>
+  <div class="decision-tile"><h3>Potential 5% IC payment hold</h3><div class="metric" id="icHoldExposure">₹45.0 Cr</div><span class="muted small" id="icHoldNote">Contingent on failure to certify required IC</span></div>
+  <div class="decision-tile"><h3>PWBG potentially at risk</h3><div class="metric" id="pwbgExposure">₹100.0 lakh</div><span class="muted small" id="pwbgNote">Contingent on final IC failure after verification</span></div>
+ </div>
+ <div class="calcgrid">
+  <div class="result"><h3>IC under current “Others” 90% estimate</h3><div class="metric" id="baseIC">55.5%</div><div class="metric status" id="baseStatus"><span class="flag">Below threshold</span></div></div>
+  <div class="result"><h3>IC arithmetic under evidence-backed “Others” assumption</h3><div class="metric" id="verifiedIC">72.0%</div><div class="metric status" id="verifiedStatus"><span class="flag green">Compliant in this scenario</span></div></div>
+  <div class="result"><h3>Potential IC uplift in evidence arithmetic</h3><div class="metric" id="evidenceValue">₹148.5 Cr</div><span class="muted small" id="evidenceValueNote">Change in calculated foreign content</span></div>
+  <div class="result"><h3>Domestic value still required after evidence</h3><div class="metric" id="remainingDomesticValue">₹0.0 Cr</div><span class="muted small" id="remainingDomesticNote">No additional substitution required in this scenario</span></div>
+ </div>
+ <div style="margin-top:14px">
+  <div class="sliderrow"><b class="small">Current DAP IC</b><output id="baseICOut">55.5%</output></div><div class="bar"><span id="baseBar" style="width:55.5%"></span></div>
+  <div class="sliderrow"><b class="small">Evidence scenario IC</b><output id="verifiedICOut">72.0%</output></div><div class="bar"><span id="verifiedBar" style="width:72%"></span></div>
+ </div>
+ <div class="decision-grid">
+  <div class="decision-tile"><h3>Local-sourcing premium to close current IC gap</h3><div class="metric" id="currentSourcingPremium">₹405.0 lakh</div><span class="muted small">Premium only; excludes the base cost of the sourced content</span></div>
+  <div class="decision-tile"><h3>Local-sourcing premium after evidence</h3><div class="metric" id="evidenceSourcingPremium">₹0.0 lakh</div><span class="muted small">If evidence is accepted and only the residual gap is sourced</span></div>
+  <div class="decision-tile"><h3>Maximum affordable evidence / audit budget</h3><div class="metric" id="maxEvidenceBudget">₹405.0 lakh</div><span class="muted small">Avoided physical-sourcing premium before verification cost</span></div>
+  <div class="decision-tile"><h3>Evidence-route advantage vs physical substitution</h3><div class="metric" id="evidenceVsSourcing">+₹395.0 lakh</div><span class="muted small" id="evidenceVsSourcingNote">Avoided sourcing premium less verification cost</span></div>
+ </div>
+ <div class="note green" id="icDecision">Decision: assemble the evidence case first if the competent authority authorises the route and the records substantiate the claim.</div>
+ <p class="small" id="flipPoint" style="margin-top:12px;color:var(--teal)">Threshold flip: current DAP presumption is below threshold; evidence scenario clears it.</p>
+ <div class="note" id="mathNote">Evidence does not change the underlying supply chain. It changes the IC calculation only if a competent authority authorises the proposed rebuttal route and the source records substantiate the claimed domestic contribution.</div>
+ <p class="muted small" style="margin-top:10px">The IC test depends on the procurement category: Buy (Global – Manufacture in India) uses the Base Contract Price (less taxes and duties), while Buy &amp; Make (Indian) uses the Make portion. Any aerospace-specific threshold variation requires documented AoN approval. Buy (Global) for a foreign vendor has no category-level IC minimum; other procurement conditions may still apply.</p>
+</section>
+
+<section class="card" style="margin-top:14px" id="financialImpact">
+ <h2>04 / Corporate economic contribution scenario (EUR / INR)</h2>
+ <p class="muted small">Compare a current regulatory-delay case with a policy-adopted case. FX is modelled on INR revenue less INR cost offsets and hedging; financing cost is applied to the average net cash funding gap; JV profit sharing is an explicit commercial scenario.</p>
+ <div class="preset-panel" aria-label="Illustrative executive stress test preset">
+  <div>
+   <strong>Illustrative Executive Stress Test</strong>
+   <p>Loads a defined demonstration case: procurement / legal eligibility confirmed as an assumption, an IC-contingent JV, and €1.5M in delay-linked LD / expedite costs. Policy and financial assumptions are set to the documented demonstration values below. This is not a statement about an actual vendor, RFP, JV or contract.</p>
+  </div>
+  <div class="preset-actions">
+   <button class="preset-btn" type="button" id="applyStressPreset">Apply stress test</button>
+   <button class="preset-btn secondary" type="button" id="resetNeutralBaseline">Return to neutral baseline</button>
+  </div>
+  <div class="preset-status" id="presetStatus" aria-live="polite">Neutral baseline active. Vendor / RFP eligibility remains unverified and no JV is assumed.</div>
+ </div>
+ <div class="controls">
+  <div><label for="exchangeRate">Base exchange rate (INR per EUR)</label><input id="exchangeRate" type="number" min="1" max="500" value="90" step="1"></div>
+  <div><label for="baseMargin">Target operating margin (%)</label><input id="baseMargin" type="number" min="0" max="50" value="12" step="0.5"></div>
+ </div>
+ <div class="grid two" style="margin-top:8px">
+  <div>
+   <h3>Contract, delay and treasury assumptions</h3>
+   <label for="delayMonths">Net critical-path regulatory delay (months)</label>
+   <div class="sliderrow"><input id="delayMonths" type="range" min="0" max="24" value="9" step="1"><output id="delayMonthsOut">9</output></div>
+   <label for="wacc">Annual WACC / economic capital-charge rate (%)</label>
+   <div class="sliderrow"><input id="wacc" type="range" min="0" max="15" value="8" step="0.5"><output id="waccOut">8.0%</output></div>
+   <label for="capitalExposure">Average net cash funding gap during delay (% of contract value)</label>
+   <div class="sliderrow"><input id="capitalExposure" type="range" min="0" max="100" value="60" step="5"><output id="capitalExposureOut">60%</output></div>
+   <label for="delayPhase">Where does the critical-path delay occur?</label>
+   <select id="delayPhase"><option value="early">Early / design / pre-procurement</option><option value="late" selected>Late / delivery / post-supplier-payment</option><option value="mixed">Mixed / distributed across project</option></select>
+   <label for="phaseCapitalMultiplier">Delay-phase capital exposure multiplier (illustrative)</label>
+   <div class="sliderrow"><input id="phaseCapitalMultiplier" type="range" min="0.25" max="2" value="1.5" step="0.05"><output id="phaseCapitalMultiplierOut">1.50×</output></div>
+   <p class="muted small">The phase selector sets illustrative starting multipliers (early 0.50×, mixed 1.00×, late 1.50×). Override them using project cash-flow evidence. The adjusted funding gap is capped at 100% of contract value in this prototype. This multiplier is a scenario proxy, not a universal defence-project curve or a milestone-by-milestone S-curve.</p>
+   <label for="fxDepreciation">Annual INR movement against EUR (+ depreciation / − appreciation, %)</label>
+   <div class="sliderrow"><input id="fxDepreciation" type="range" min="-10" max="10" value="3" step="0.5"><output id="fxDepreciationOut">3.0%</output></div>
+   <label for="inrRevenueShare">Customer receipts denominated in INR (%)</label>
+   <div class="sliderrow"><input id="inrRevenueShare" type="range" min="0" max="100" value="100" step="5"><output id="inrRevenueShareOut">100%</output></div>
+   <label for="inrCostShare">Operating cost base denominated in INR (%)</label>
+   <div class="sliderrow"><input id="inrCostShare" type="range" min="0" max="100" value="75" step="5"><output id="inrCostShareOut">75%</output></div>
+   <label for="fxHedgeCoverage">Forward / option hedge coverage of net adverse exposure (%)</label>
+   <div class="sliderrow"><input id="fxHedgeCoverage" type="range" min="0" max="100" value="50" step="5"><output id="fxHedgeCoverageOut">50%</output></div>
+   <label for="fxHedgeCost">Hedge cost (% of hedged notional over the delay)</label>
+   <div class="sliderrow"><input id="fxHedgeCost" type="range" min="0" max="5" value="0.5" step="0.1"><output id="fxHedgeCostOut">0.5%</output></div>
+   <label for="hedgeTenorMonths">Original hedge tenor / maturity (months)</label>
+   <input id="hedgeTenorMonths" type="number" min="0" max="60" value="6" step="1">
+   <label for="hedgeRollPenalty">Additional hedge roll / extension penalty (% of hedged notional per month beyond original maturity)</label>
+   <input id="hedgeRollPenalty" type="number" min="0" max="5" value="0.15" step="0.01">
+   <p class="muted small">A simplified extension-cost proxy. Actual forward roll economics depend on forward points, cross-currency basis, market liquidity, hedge designation, collateral and replacement hedge terms; use treasury quotes for a live transaction.</p>
+   <label for="expectedLD">Estimated LD at current delay (€M; simplified linear proxy)</label>
+   <input id="expectedLD" type="number" min="0" max="1000" value="0" step="0.1">
+   <label for="expediteCost">Incremental expediting / recovery cost at current delay (€M; separate estimate)</label>
+   <input id="expediteCost" type="number" min="0" max="1000" value="0" step="0.1">
+   <div class="note">The funding-gap input should reflect the average incremental cash balance actually funded after customer advances, milestone receipts, supplier credit and working-capital offsets. The selected delay phase applies an editable multiplier to this average gap; it does not reconstruct a milestone-by-milestone cash-flow curve. It should not default to 100% unless the full contract value is genuinely financed throughout the delay. If the 5% IC withholding shown in Section 03 is already included in this cash-gap estimate, do not add it again. LD and expediting are separate estimates, each scaled linearly in this prototype. This is not a contractual LD calculation: enter contract-specific triggers, caps, grace periods and delay attribution before relying on it.</div>
+  </div>
+  <div>
+   <h3>Commercial structure and compliance response</h3>
+   <label for="jvScenario">JV scenario (a missed IC threshold does not automatically require a JV)</label>
+   <select id="jvScenario">
+    <option value="none" selected>No JV assumed</option>
+    <option value="ic">Illustrative JV used solely as a response to an overall IC or Indian-manufacture sub-test shortfall</option>
+    <option value="always">JV applies for separate commercial / vendor-structure reasons</option>
+   </select>
+   <label for="jvProfitPoolShare">Share of project operating profit generated by JV activities (%)</label>
+   <div class="sliderrow"><input id="jvProfitPoolShare" type="range" min="0" max="100" value="50" step="5"><output id="jvProfitPoolShareOut">50%</output></div>
+   <label for="jvDilution">Local partner share of JV distributable profit (%)</label>
+   <div class="sliderrow"><input id="jvDilution" type="range" min="0" max="100" value="51" step="1"><output id="jvDilutionOut">51%</output></div>
+   <label for="jvPartnerFundingShare">Partner-funded share of the relevant project cash funding gap (%)</label>
+   <div class="sliderrow"><input id="jvPartnerFundingShare" type="range" min="0" max="100" value="0" step="5"><output id="jvPartnerFundingShareOut">0%</output></div>
+   <p class="muted small">This is an independently evidenced capital / working-capital contribution assumption. It is deliberately not auto-set to the partner's equity or profit share: ownership does not, by itself, prove the timing or amount of cash funded.</p>
+   <label for="sourceRemediation">Model physical local-sourcing fallback?</label>
+   <select id="sourceRemediation"><option value="off" selected>No — show sourcing economics in Section 03 only</option><option value="on">Yes — include the sourcing premium needed to close the IC gap</option></select>
+   <div class="geo-note"><b>JV boundary:</b> A failed IC or Indian-manufacture test does not itself make a JV a statutory DAP requirement. In the “IC-linked JV” option, the model assumes a JV as one illustrative commercial response to a compliance shortfall; other lawful remediation or procurement routes may exist. DAP ownership / control requirements, defence-sector FDI entry routes and a JV's profit-distribution agreement are separate questions. The model applies the partner's share only to the selected JV-generated profit pool; ownership percentage is not treated as an automatic entitlement to the entire programme profit. An unevidenced Indian-manufacture test is unknown, not a demonstrated failure, and therefore does not trigger the IC-linked JV assumption.</div>
+   <h3 style="margin-top:14px">Policy adoption and expected value</h3>
+   <label for="assurancePilotAcceptance">DGAQA pilot acceptance status (only relevant to fastener candidate)</label>
+   <select id="assurancePilotAcceptance"><option value="notAccepted" selected>Not accepted / pending</option><option value="accepted">Pilot formally accepted by DGAQA</option></select>
+   <label for="licensingScopeStatus">Licensing intervention eligibility</label>
+   <select id="licensingScopeStatus"><option value="notReviewed" selected>Not reviewed / no benefit credited</option><option value="controlledConfirmed">Relevant controlled transfer confirmed for scenario</option><option value="notControlled">Not controlled / not applicable</option></select>
+   <label for="policyLever">Policy intervention being tested</label>
+   <select id="policyLever">
+    <option value="combined" selected>Combined package — apply only eligible measures</option>
+    <option value="licensing">Recurring technology-transfer authorisation</option>
+    <option value="assurance">DGAQA evidence-reuse pilot — standard hardware only</option>
+    <option value="icEvidence">DAP indigenous-content evidence route</option>
+   </select>
+   <label for="addressableDelayShare">Share of current critical-path delay this intervention can address (%)</label>
+   <div class="sliderrow"><input id="addressableDelayShare" type="range" min="0" max="100" value="50" step="5"><output id="addressableDelayShareOut">50%</output></div>
+   <label for="delayReduction">Reduction within the addressable delay share if adopted and effective (%)</label>
+   <div class="sliderrow"><input id="delayReduction" type="range" min="0" max="100" value="50" step="5"><output id="delayReductionOut">50%</output></div>
+   <label for="policyProb">Probability competent authorities adopt the proposed pathway (%)</label>
+   <div class="sliderrow"><input id="policyProb" type="range" min="0" max="100" value="30" step="5"><output id="policyProbOut">30%</output></div>
+   <label for="policyEffectiveness">Probability the pathway delivers the assumed benefit once adopted (%)</label>
+   <div class="sliderrow"><input id="policyEffectiveness" type="range" min="0" max="100" value="70" step="5"><output id="policyEffectivenessOut">70%</output></div>
+   <label for="readinessCost">Company readiness / implementation cost (€M; incurred now)</label>
+   <input id="readinessCost" type="number" min="0" max="100" value="0.10" step="0.01">
+  </div>
+ </div>
+ <div class="financial-kpis geo-kpis geo-output">
+  <div class="financial-kpi"><h3>Base operating profit</h3><div class="metric" id="baseProfitEur">€12.00M</div><div class="small" id="baseProfitInr">₹108.0 Cr</div></div>
+  <div class="financial-kpi"><h3>Net FX impact after INR cost offsets / hedging</h3><div class="metric" id="fxLossEur">−€0.00M</div><div class="small" id="fxLossRate">Delayed rate: ₹90.00 / €</div></div>
+  <div class="financial-kpi"><h3>Economic capital charge (WACC)</h3><div class="metric" id="waccLossEur">−€0.00M</div><div class="small">On average net cash funding gap</div></div>
+  <div class="financial-kpi"><h3>LD + expediting costs</h3><div class="metric" id="ldCostEur">−€0.00M</div><div class="small">User-entered contract exposure</div></div>
+  <div class="financial-kpi"><h3>JV partner profit share</h3><div class="metric" id="jvCostEur">−€0.00M</div><div class="small" id="jvStatus">No JV assumed</div></div>
+  <div class="financial-kpi"><h3>Local-sourcing premium + NRE / qualification</h3><div class="metric" id="localSourcingCostEur">−€0.00M</div><div class="small">Only when physical fallback is selected</div></div>
+  <div class="financial-kpi"><h3>Friction-adjusted project contribution</h3><div class="metric" id="netProfitEur">€0.00M</div><div class="small" id="netProfitInr">₹0.0 Cr at base FX</div><div class="metric status" style="margin-top:7px"><span class="flag amber" id="netMarginStatus">Contribution ratio</span></div></div>
+  <div class="financial-kpi" style="border-color:var(--teal)"><h3 style="color:var(--teal)">Illustrative expected net policy value</h3><div class="metric" id="policySavingsEur" style="color:var(--teal)" aria-live="polite">+€0.00M</div><div class="small" id="policyValueNote" aria-live="polite">Risk-adjusted benefit less company readiness cost</div></div>
+ </div>
+ <div class="decision-grid">
+  <div class="decision-tile"><h3>Conditional benefit if adopted and effective</h3><div class="metric" id="conditionalPolicyBenefit">€0.00M</div><span class="muted small">Before policy and execution probabilities</span></div>
+  <div class="decision-tile"><h3>Break-even adoption probability</h3><div class="metric" id="breakEvenAdoption">—</div><span class="muted small">At the selected effectiveness probability and readiness cost</span></div>
+  <div class="decision-tile"><h3>Policy-case contribution before evidence cost</h3><div class="metric" id="mitigatedProfitEur">€0.00M</div><span class="muted small" id="mitigatedDetail">Uses the reduced-delay assumption</span></div>
+ </div>
+ <div class="note" id="financialModelNote">Illustrative expected net policy value is a decision-analysis estimate. Capital lock-up is phase-weighted; hedge extension is charged only beyond the original hedge tenor; local substitution includes a one-time NRE / qualification input; and JV capital funding is separately specified rather than inferred from ownership. These are scenario proxies, not a booked financial forecast.</div>
+</section>
+
+<section class="grid three" style="margin-top:14px">
+ <div class="card"><span class="eyebrow">Recommendation 01</span><h2 style="margin-top:8px">Recurring technology transfers</h2><p class="muted">Test exporter-specific authorisations and a common evidence schedule for defined, non-classified intra-group transfers. EU and India workflows remain legally separate.</p><span class="pill">Measure: repeat-transfer burden</span></div>
+ <div class="card"><span class="eyebrow">Recommendation 02</span><h2 style="margin-top:8px">Risk-based supplier qualification</h2><p class="muted">Pilot evidence reuse only for eligible non-safety-critical, build-to-print standard hardware. DGAQA retains decision authority, surveillance and rejection rights.</p><span class="pill">Measure: assurance outcomes</span></div>
+ <div class="card"><span class="eyebrow">Recommendation 03</span><h2 style="margin-top:8px">Verify domestic value addition</h2><p class="muted">Create a formally authorised route to rebut the 90% estimate with tax, transaction, sourcing and production records. Existing presumption remains until authority changes.</p><span class="pill">Measure: audit-verified content</span></div>
+</section>
+
+<section class="card" style="margin-top:14px">
+ <h2>Assumptions register and interpretation rules</h2>
+ <ul class="muted small">
+  <li><b>Observed / source-based:</b> published control-list entries, DAP category rules and cited institutional instruments, subject to version and jurisdiction checks.</li>
+  <li><b>User-entered evidence:</b> supplier values, contract exclusions, audit status, FX exposures, delay, costs and eligibility. A slider or input is not documentary proof.</li>
+  <li><b>Calculated:</b> weighted IC sensitivities, incremental local-sourcing credit, indicative 5% hold / PWBG exposure and economic contribution under stated assumptions.</li>
+  <li><b>Scenario assumptions:</b> policy adoption/effectiveness, delay reduction, JV structure, funding gap and costs. These are not empirical forecasts or legal consequences.</li>
+  <li><b>Authority decisions:</b> only an explicit authority-accepted status is treated as accepted in the model. A submitted, supplier-declared or audited record is not automatically accepted.</li>
+ </ul>
+ <p class="muted small">The local-sourcing sub-test value is a scenario estimate and is not added to the accepted Indian-manufacture compliance value. The quick aggregate IC mode is a sensitivity model, not a substitute for the DAP supplier-level IC proforma. The source-ledger fields required for a live contract—supplier/tier, item, value, imported material, foreign services, fees/royalties, currency, documentation and authority verification—must be maintained outside this prototype.</p>
+</section>
+
+<section class="card" style="margin-top:14px">
+ <h2>Sources, evidence and interpretation controls</h2>
+ <p class="muted small">Primary source basis is the October 2026 policy brief, supplemented here by the revised SCOMET 2025 entry and official DAP 2020 materials.</p>
+ <details><summary>Control-list and regulatory sources</summary>
+  <ol class="muted small">
+   <li><a href="https://eur-lex.europa.eu/eli/reg/2021/821/oj" target="_blank" rel="noopener">Regulation (EU) 2021/821</a>, Annex I, Category 9; 9D003 and 9E003.h.</li>
+   <li><a href="https://www.wassenaar.org/" target="_blank" rel="noopener">Wassenaar Arrangement</a>, WA-LIST(25) 1 Corr., Category 9; 9.D.3 and 9.E.3.h.</li>
+   <li><a href="https://content.dgft.gov.in/Website/dgftprod/82cccea3-646e-435c-876f-88476c4ed5ca/Updated%20SCOMET%20List%202025%20%28as%20on%2023.09.2025%29.docx.pdf" target="_blank" rel="noopener">DGFT, Updated and Revised SCOMET List 2025 (as notified 23 September 2025; Notification 31/2025–26, effective 23 October 2025)</a>, Category 8; 8D903 and 8E903.h.</li>
+   <li><a href="https://www.makeinindiadefence.gov.in/public/upload/writereaddata/DAP2030new_0.pdf" target="_blank" rel="noopener">Defence Acquisition Procedure 2020 (consolidated official text, including 18 March 2024 BNE amendment)</a>, Chapter I, paras. 8–12, 20–22, and Appendix B, paras. 4–5 and 14 (IC categories, contract-specific thresholds, vendor definitions and named-tier reporting tests, “Others” 90% estimate, and conditional 5% payment withholding / PWBG forfeiture where mandatory IC is not achieved).</li>
+   <li><a href="https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1659746" target="_blank" rel="noopener">Press Information Bureau, DAP 2020 announcement</a>, indigenous-content category summary. See also DAP 2020 para. 22 for approved threshold variations in niche technology equipment including aerospace.</li>
+   <li><a href="https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1656082" target="_blank" rel="noopener">DPIIT, Press Note No. 4 (2020 Series), defence-sector FDI policy revision</a>, 18 September 2020; separate from DAP vendor ownership / control requirements.</li>
+  </ol>
+ </details>
+ <details><summary>Other references cited in the policy brief</summary>
+  <ol class="muted small"><li>Council of the EU, Joint Statement 5727/26, 27 January 2026; EU–India Security and Defence Partnership.</li><li>EASA–DGCA Working Arrangement, AS350 B3 production, Vemagal.</li><li>EDA Third Parties registry; EDA–U.S. DoD Administrative Arrangement, 26 April 2023.</li><li>Joint Communication on the European Defence Industrial Strategy, JOIN(2024) 10 final.</li><li>DGAQA, Approval of Firm and its Quality Management System (AFQMS), Issue III, August 2024.</li><li>BIS, IS 13153:2024 (ISO 8279 harmonised), IS/ISO 16426:2002, IS/ISO 20816-4:2018.</li><li>Saab AB Annual and Sustainability Report 2025; Investor AB Annual Report 2025.</li><li>Committee on Estimates, Lok Sabha, 29th Report, 25 July 2018, as cited in PRS (2019).</li><li>DGFT Handbook of Procedures 2023, Chapter 10; DGFT Trade Notice No. 07/2025–26, 14 July 2025.</li><li>GSTN E-Way Bill System; Central Goods and Services Tax Rules, 2017, Rule 138.</li><li>Ministry of Defence, “Inviting Comments on the Draft DAP–2026,” Press Information Bureau, 10 February 2026.</li></ol>
+ </details>
+ <div class="note red"><b>Use limitation:</b> This is a static policy-research simulator with three distinct modes: regulatory orientation, DAP compliance scenario and corporate economic contribution scenario. It is not a live regulatory feed, export-control classification tool, legal opinion, engineering-design tool, procurement-eligibility determination, project cash-flow model, full P&amp;L or financial forecast. Classification, licensing and indigenous-content calculations must be checked against the current applicable rules, technical parameters and competent-authority decisions.</div>
+</section>
+<footer>
+ <div class="footerbrand"><div>Dashboard v2.7.1 · 3 November 2026</div></div>
+ <p>Independent research tool. Analysis and recommendations are the author's and do not represent the position of any government, agency or company named.</p>
+</footer>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const components = {
+ turbine:{title:'Gas-turbine engine technology',origin:'EU exporter / design authority',originDesc:'Classify the engine item and related technology against the technical parameters of the applicable entry.',control:'EU / Wassenaar Group 9',controlDesc:'Engine equipment may fall under 9A001 / 9.A.1; related development technology must be assessed separately.',india:'SCOMET 8A901 / 8E903',indiaDesc:'8A901 is not a blanket entry for every aero gas-turbine engine; check its incorporation and technical criteria. Assess related technology separately under the exact 8E903 sub-entry.',pilot:false,procTitle:'Contract IC / Engine programme',proc:'The procurement IC calculation is contract-level. A controlled engine item is not, by itself, evidence that a spend belongs in the “Others” bucket.'},
+ fadec:{title:'FADEC control-law software',origin:'Software developer / exporter',originDesc:'Distinguish executable or source software from the underlying development / production technology.',control:'Software: 9D003 / 9.D.3',controlDesc:'FADEC software is in Group D. Do not substitute 9E003.h, which is a technology entry.',india:'Software: 8D903',indiaDesc:'SCOMET 8D903 covers software incorporating technology specified by 8E903.h and used in specified FADEC systems.',pilot:false,procTitle:'Contract IC / Software supply',proc:'The procurement IC model does not infer that all FADEC-related spend is “Others”; vendor tier and sourcing evidence determine treatment.'},
+ cooling:{title:'Turbine cooling-hole / metallurgy technology',origin:'Technology holder / process owner',originDesc:'Classify controlled technical data and the associated physical component as separate questions.',control:'Technology: 9E003.c / 9E003.h',controlDesc:'Group E technology entries cover specified development / production technology, not generic engineering know-how.',india:'Technology: 8E903',indiaDesc:'Check the exact sub-entry in the 2025 SCOMET list, including relevant technical thresholds and notes.',pilot:false,procTitle:'Contract IC / Technology transfer',proc:'Flight-critical, structural, fatigue-sensitive and rotating applications are outside the initial DGAQA evidence-reuse pilot.'},
+ fastener:{title:'Standard hardware / fasteners (IS 13153:2024)',origin:'Indian / EU supplier and buyer',originDesc:'Confirm the actual fastener specification, production records, intended installation and failure consequence.',control:'Usually not the selected controlled-tech example',controlDesc:'Do not infer export-control status solely from the standard designation; classify the actual good, software or technology if relevant.',india:'Standards / supplier qualification',indiaDesc:'IS 13153:2024 is a standard reference; conformity does not automatically confer DGAQA approval or export-control treatment.',pilot:true,procTitle:'Contract IC / Lower-tier hardware',proc:'If sourced through a qualifying balance-tier vendor, trader, stockist or local agent and records are inadequate, the spend may enter “Others”.'}
+};
+let selectedPilotScopeEligible=false;
+function updateComponent(){
+ const componentId=$('component').value;
+ const c=components[componentId];
+ const pilotApplication=$('pilotApplication').value;
+ selectedPilotScopeEligible=!!c.pilot&&pilotApplication==='eligible';
+ $('pilotApplicationWrap').hidden=!c.pilot;
+ ['rowTurbine','rowSoftware','rowTech','rowCooling'].forEach(id=>$(id).classList.remove('highlight'));
+ if(componentId==='turbine') $('rowTurbine').classList.add('highlight');
+ if(componentId==='fadec') {$('rowSoftware').classList.add('highlight');$('rowTech').classList.add('highlight');}
+ if(componentId==='cooling') $('rowCooling').classList.add('highlight');
+ $('originTitle').textContent=c.origin;$('originDesc').textContent=c.originDesc;
+ $('controlTitle').textContent=c.control;$('controlDesc').textContent=c.controlDesc;
+ $('indiaTitle').textContent=c.india;$('indiaDesc').textContent=c.indiaDesc;
+ $('assuranceTitle').textContent='DGAQA / AFQMS';
+ $('procurementTitle').textContent=c.procTitle;
+ if(c.pilot){
+  if(pilotApplication==='eligible'){
+   $('assuranceDesc').textContent='The application has been screened as non-safety-critical, build-to-print standard hardware. DGAQA approval, intended-use review and failure-consequence assessment are still required.';
+   $('pilotBadge').className='flag green';$('pilotBadge').textContent='Candidate for pilot · DGAQA approval required';
+   $('routeNote').className='note green';$('routeNote').textContent='The selected application has passed the dashboard’s initial scope screen only. This is not DGAQA approval or a finding that the part is low-risk; the authority retains the final decision.';
+  }else if(pilotApplication==='excluded'){
+   $('assuranceDesc').textContent='The selected fastener application has been screened as safety-critical or otherwise excluded. The initial evidence-reuse pilot does not apply.';
+   $('pilotBadge').className='flag';$('pilotBadge').textContent='Excluded: safety-critical application';
+   $('routeNote').className='note red';$('routeNote').textContent='This application is outside the proposed DGAQA pilot. Do not apply the pilot delay benefit or evidence-reuse assumption.';
+  }else{
+   $('assuranceDesc').textContent='Fasteners are only a candidate component family. The intended application and consequence of failure have not yet been screened.';
+   $('pilotBadge').className='flag amber';$('pilotBadge').textContent='Application not assessed';
+   $('routeNote').className='note';$('routeNote').textContent='No DGAQA pilot eligibility is assumed until the application and failure consequence are screened. The dashboard will not credit an assurance-delay benefit while status remains unassessed.';
+  }
+  $('procurementBadge').className='flag amber';$('procurementBadge').textContent='Check lower-tier “Others” treatment';
+ }else{
+  $('assuranceDesc').textContent='Initial evidence-reuse pilot is limited to non-safety-critical, build-to-print standard hardware. Flight-critical, structural, fatigue-sensitive and rotating applications remain excluded.';
+  $('pilotBadge').className='flag';$('pilotBadge').textContent='Excluded from pilot: Flight-critical';
+  $('procurementBadge').className='flag blue';$('procurementBadge').textContent='Contract-level IC treatment only';
+  $('routeNote').className='note';$('routeNote').textContent='This selected example is not in the initial DGAQA evidence-reuse pilot. Eligibility cannot be inferred from component label alone; the brief requires application- and consequence-based screening.';
+ }
+ $('procurementDesc').textContent=c.proc;
+ if(typeof updateFinancials==='function') updateFinancials();
+}
+function updateRoute(){
+ const r=$('route').value,c=components[$('component').value];
+ if(r==='ineu'){
+  $('originTitle').textContent='Indian exporter / technology holder';
+  $('controlTitle').textContent='India: SCOMET / DGFT';
+  $('controlDesc').textContent='Assess the Indian export-control entry, end user, destination and whether GAICT eligibility conditions are met.';
+  $('indiaTitle').textContent='EU Member State authority';
+  $('indiaDesc').textContent='EU destination-side requirements remain separately applicable; there is no automatic reciprocal authorisation.';
+ }else if(r==='intra'){
+  $('originTitle').textContent='Parent ↔ subsidiary';
+  $('controlTitle').textContent='Two legally separate workflows';
+  $('controlDesc').textContent='Recurring transfers may qualify for exporter-specific authorisations under the relevant EU rules, subject to conditions.';
+  $('indiaTitle').textContent='EU authorisation + GAICT if eligible';
+  $('indiaDesc').textContent='India’s GAICT is limited to eligible SCOMET Category 8 items, destinations and conditions; it is not a bilateral licence.';
+ }else{
+  $('controlTitle').textContent=c.control;$('controlDesc').textContent=c.controlDesc;
+  $('indiaTitle').textContent=c.india;$('indiaDesc').textContent=c.indiaDesc;
+ }
+}
+function pct(n){return Number(n).toFixed(1)+'%'}
+function formatInrCr(n){const sign=n<0?'−':'';return sign+'₹'+Math.abs(n).toFixed(1)+' Cr'}
+function formatInrLakh(n){const sign=n<0?'−':'';return sign+'₹'+Math.abs(n).toFixed(1)+' lakh'}
+function setStatus(el,ic,threshold,applies=true){
+ if(!applies){el.innerHTML='<span class="flag blue">No IC minimum in selected category</span>';return}
+ el.innerHTML=ic+1e-9>=threshold?'<span class="flag green">Meets threshold in this scenario</span>':'<span class="flag">Below threshold</span>';
+}
+let contractICState={current:55.5,evidence:72.0,threshold:60,thresholdApplies:true,baseCr:900,currentGapCr:40.5,evidenceGapCr:0,currentPremiumCr:4.05,evidencePremiumCr:0,verificationCostLakh:100,netEvidenceVsLocalLakh:395,vendorEligibility:'notChecked',indianMfgPass:false};
+const icCategories={
+ iddm:{threshold:50,label:'Buy (Indian-IDDM)',base:'full'},
+ buyIndianDesign:{threshold:50,label:'Buy (Indian), indigenous design',base:'full'},
+ buyIndianOther:{threshold:60,label:'Buy (Indian), non-indigenous design',base:'full'},
+ buyMake:{threshold:50,label:'Buy & Make (Indian), Make portion',base:'make'},
+ globalMake:{threshold:50,label:'Buy (Global – Manufacture in India)',base:'full'},
+ globalIndian:{threshold:30,label:'Buy (Global), Indian vendor',base:'full'},
+ globalForeign:{threshold:null,label:'Buy (Global), foreign vendor',base:'full'}
+};
+function updateCalc(){
+ const categoryId=$('category').value;
+ const category=icCategories[categoryId]||icCategories.buyIndianOther;
+ const grossContract=Math.max(0,Number($('contractValue').value)||0);
+ const taxDuties=Math.max(0,Number($('taxDuties').value)||0);
+ const bneExcluded=Math.max(0,Number($('bneExcluded').value)||0);
+ const supportExcluded=Math.max(0,Number($('supportExcluded').value)||0);
+ const contract=Math.max(0,grossContract-taxDuties-bneExcluded-supportExcluded);
+ const makeShare=Math.max(1,Math.min(100,Number($('makePortion').value)||60))/100;
+ const docF=Math.max(0,Math.min(100,Number($('docForeign').value)||0));
+ const others=Math.max(0,Math.min(100,Number($('othersShare').value)||0))/100;
+ const verified=Math.max(0,Math.min(100,Number($('verifiedForeign').value)||0));
+ const premium=Math.max(0,Number($('domesticPremium').value)||0)/100;
+ const localSupplierForeign=Math.max(0,Math.min(100,Number($('localSupplierForeign').value)||0))/100;
+ const localDomesticShare=1-localSupplierForeign;
+ const verificationCostLakh=Math.max(0,Number($('verificationCost').value)||0);
+ const documentedShare=1-others;
+ const adjustedBCP=contract;
+ const baseCr=adjustedBCP*(category.base==='make'?makeShare:1);
+ const override=$('thresholdSource').value==='contract';
+ const thresholdApplies=override||category.threshold!==null;
+ const threshold=override?Math.max(0,Math.min(100,Number($('customThreshold').value)||0)):(category.threshold??0);
+ const indianMfgShare=Math.max(0,Math.min(100,Number($('indianMfgShare').value)||0));
+ const indianMfgRequiredCr=thresholdApplies?(threshold/100*baseCr*0.5):0;
+ const indianMfgValueCr=baseCr*indianMfgShare/100;
+ const indianMfgGapCr=Math.max(0,indianMfgRequiredCr-indianMfgValueCr);
+ const indianMfgEvidence=$('indianMfgEvidence').value;
+ const indianMfgEvidenceEntered=indianMfgEvidence!=='none'&&indianMfgEvidence!=='estimate'&&indianMfgShare>0;
+ const indianMfgAccepted=indianMfgEvidence==='accepted';
+ const indianMfgAudited=indianMfgEvidence==='audited'||indianMfgAccepted;
+ const indianMfgPass=indianMfgAccepted&&indianMfgGapCr<=0.000001;
+ const indianMfgEvidencedShortfall=indianMfgAudited&&indianMfgGapCr>0.000001;
+ const evidenceRoute=$('evidenceRoute').value;
+ const evidenceRouteStatus=$('evidenceRouteStatus').value;
+ const evidenceRouteAccepted=evidenceRoute!=='none'&&evidenceRouteStatus==='accepted';
+ const vendorEligibility=$('vendorEligibility').value;
+ const currentForeign=documentedShare*docF+others*90;
+ const evidenceForeign=documentedShare*docF+others*verified;
+ const currentIC=100-currentForeign;
+ const evidenceIC=100-evidenceForeign;
+ const currentGapCr=thresholdApplies?Math.max(0,threshold-currentIC)/100*baseCr:0;
+ const evidenceGapCr=thresholdApplies?Math.max(0,threshold-evidenceIC)/100*baseCr:0;
+ const evidenceValueCr=(currentIC-evidenceIC)*-1/100*baseCr;
+ // Local suppliers may still embed imported inputs. Gross procurement required therefore
+ // exceeds the domestic-value gap; only the indigenous share counts towards IC.
+ const replacementSource=$('replacementSource').value;
+ const currentDisplacedDomesticCredit=replacementSource==='others'?0.10:1-docF/100; // existing domestic credit in the spend being displaced
+ const evidenceDisplacedDomesticCredit=replacementSource==='others'?1-verified/100:1-docF/100;
+ const currentIncrementalDomesticShare=localDomesticShare-currentDisplacedDomesticCredit;
+ const evidenceIncrementalDomesticShare=localDomesticShare-evidenceDisplacedDomesticCredit;
+ const availableDisplacedSpendCr=baseCr*(replacementSource==='others'?others:documentedShare);
+ const rawCurrentLocalProcurementCr=currentIncrementalDomesticShare>0?currentGapCr/currentIncrementalDomesticShare:(currentGapCr>0?Infinity:0);
+ const rawEvidenceLocalProcurementCr=evidenceIncrementalDomesticShare>0?evidenceGapCr/evidenceIncrementalDomesticShare:(evidenceGapCr>0?Infinity:0);
+ const currentLocalProcurementCr=rawCurrentLocalProcurementCr<=availableDisplacedSpendCr+1e-9?rawCurrentLocalProcurementCr:(currentGapCr===0?0:Infinity);
+ const evidenceLocalProcurementCr=rawEvidenceLocalProcurementCr<=availableDisplacedSpendCr+1e-9?rawEvidenceLocalProcurementCr:(evidenceGapCr===0?0:Infinity);
+ const currentPremiumCr=currentLocalProcurementCr*premium;
+ const evidencePremiumCr=evidenceLocalProcurementCr*premium;
+ const verificationCostCr=verificationCostLakh/100;
+ const maxEvidenceBudgetLakh=(currentPremiumCr-evidencePremiumCr)*100;
+ const netEvidenceVsLocalLakh=maxEvidenceBudgetLakh-verificationCostLakh;
+ const othersSpendCr=baseCr*others;
+ const localIndianMfgShare=Math.max(0,Math.min(100,Number($('localIndianMfgShare').value)||0))/100;
+ const currentSourcingIndianMfgAddedCr=Number.isFinite(currentLocalProcurementCr)?currentLocalProcurementCr*localIndianMfgShare:Infinity;
+ const evidenceSourcingIndianMfgAddedCr=Number.isFinite(evidenceLocalProcurementCr)?evidenceLocalProcurementCr*localIndianMfgShare:Infinity;
+ contractICState={current:currentIC,evidence:evidenceIC,threshold,thresholdApplies,baseCr,grossContractCr:grossContract,currentGapCr,evidenceGapCr,currentPremiumCr,evidencePremiumCr,verificationCostLakh,netEvidenceVsLocalLakh,maxEvidenceBudgetLakh,currentLocalProcurementCr,evidenceLocalProcurementCr,localDomesticShare,vendorEligibility,indianMfgPass,indianMfgAccepted,indianMfgAudited,indianMfgEvidencedShortfall,indianMfgGapCr,indianMfgValueCr,indianMfgRequiredCr,currentSourcingIndianMfgAddedCr,evidenceSourcingIndianMfgAddedCr,evidenceRoute,evidenceRouteStatus,evidenceRouteAccepted, currentIncrementalDomesticShare,evidenceIncrementalDomesticShare};
+ $('makePortionOut').textContent=(makeShare*100).toFixed(0)+'%';$('localSupplierForeignOut').textContent=(localSupplierForeign*100).toFixed(0)+'%';
+ $('docForeignOut').textContent=docF.toFixed(0)+'%';$('othersShareOut').textContent=(others*100).toFixed(0)+'%';$('verifiedForeignOut').textContent=verified.toFixed(0)+'%';$('domesticPremiumOut').textContent=(premium*100).toFixed(0)+'%';
+ $('makePortionWrap').hidden=category.base!=='make';
+ $('customThresholdWrap').hidden=!override;
+ $('threshold').textContent=thresholdApplies?pct(threshold):'No IC minimum';
+ $('categoryLabel').textContent=override?category.label+' · RFP / AoN override':category.label;
+ $('icBaseValue').textContent=formatInrCr(baseCr);
+ $('icBaseNote').textContent=(category.base==='make'?'Make portion of adjusted BCP':(categoryId==='globalMake'?'Adjusted BCP — 50% IC test':'Adjusted Base Contract Price'))+' · Gross '+formatInrCr(grossContract)+' less exclusions '+formatInrCr(grossContract-contract);
+ $('othersSpendValue').textContent=formatInrCr(othersSpendCr);
+ $('vendorEligibilityStatus').textContent=vendorEligibility==='confirmed'?'Confirmed':(vendorEligibility==='notEligible'?'Not eligible':'Not checked');
+ $('vendorEligibilityStatus').style.color=vendorEligibility==='confirmed'?'var(--green)':(vendorEligibility==='notEligible'?'var(--red)':'var(--amber)');
+ $('indianMfgShareOut').textContent=indianMfgShare.toFixed(0)+'%';
+ $('localIndianMfgShareOut').textContent=(localIndianMfgShare*100).toFixed(0)+'%';
+ $('indianMfgRequired').textContent=thresholdApplies?formatInrCr(indianMfgRequiredCr):'Not applicable';
+ $('indianMfgValue').textContent=formatInrCr(indianMfgValueCr);
+ $('indianMfgGap').textContent=thresholdApplies?formatInrCr(indianMfgGapCr):'Not applicable';
+ $('localSourcingMfgValue').textContent=Number.isFinite(currentSourcingIndianMfgAddedCr)?formatInrCr(currentSourcingIndianMfgAddedCr):'Not feasible';
+ $('localSourcingMfgNote').textContent='Assumed qualifying share '+(localIndianMfgShare*100).toFixed(0)+'% of replacement spend; must be separately evidenced and accepted.';
+ $('indianMfgGapAfterSourcing').textContent=Number.isFinite(currentSourcingIndianMfgAddedCr)?formatInrCr(Math.max(0,indianMfgGapCr-currentSourcingIndianMfgAddedCr)):'Not feasible';
+ $('indianMfgStatus').textContent=!thresholdApplies?'No IC floor':(indianMfgPass?'Authority accepted — pass':(indianMfgEvidencedShortfall?'Audited evidence — shortfall':(indianMfgAudited?'Audited evidence — provisional pass':(indianMfgEvidenceEntered?'Unverified claim':'Unknown — no evidence'))));
+ $('indianMfgStatus').style.color=indianMfgPass?'var(--green)':(indianMfgEvidencedShortfall?'var(--red)':'var(--amber)');
+ $('indianMfgNote').textContent=thresholdApplies?'Required: '+formatInrCr(indianMfgRequiredCr)+' · Claimed: '+formatInrCr(indianMfgValueCr)+' · Evidence: '+indianMfgEvidence:'No IC floor in selected category';
+ $('evidenceRouteStatusOut').textContent=evidenceRoute==='none'?'No route selected':(evidenceRouteStatus==='accepted'?'Authority accepted':(evidenceRouteStatus==='submitted'?'Decision pending':'Not confirmed'));
+ $('evidenceRouteNote').textContent=evidenceRoute==='dapImport'?'Existing DAP Appendix B para. 5 route; assess its exact scope and documentation.':(evidenceRoute==='enhanced'?'Proposed protocol; not an existing legal entitlement.':'No evidentiary route selected.');
+ const aggPass=currentIC+1e-9>=threshold;
+ const overallPass=thresholdApplies&&vendorEligibility==='confirmed'&&aggPass&&indianMfgPass;
+ $('overallComplianceState').textContent=!thresholdApplies?'No IC floor':(vendorEligibility==='notEligible'?'Vendor ineligible':(overallPass?'Authority-supported pass':(vendorEligibility!=='confirmed'?'Undetermined — eligibility':(!indianMfgAudited?'Undetermined — evidence':(indianMfgEvidencedShortfall||!aggPass?'Shortfall indicated':'Provisional only')))));
+ $('overallComplianceNote').textContent='Aggregate IC '+(aggPass?'meets':'below')+' threshold; Indian-manufacture evidence '+(indianMfgPass?'accepted':indianMfgAudited?'audited but not accepted':'not authority-accepted')+'.';
+ // DAP Appendix B tier reporting screen: aggregate related contracts for this prime vendor.
+ // The named-tier reporting trigger is the lower of ₹10 crore or 5% of the prime Base Contract Price.
+ const tierSupplierValue=Math.max(0,Number($('tierSupplierValue').value)||0);
+ const tierReportingThreshold=Math.min(10,contract*0.05);
+ const tierReportable=tierSupplierValue>tierReportingThreshold;
+ $('tierReportingThreshold').textContent=formatInrCr(tierReportingThreshold);
+ $('tierReportingStatus').textContent=tierReportable?'Meets reporting test':'Below reporting threshold';
+ $('tierReportingStatus').style.color=tierReportable?'var(--teal)':'var(--amber)';
+ $('tierReportingNote').textContent='Entered aggregate: '+formatInrCr(tierSupplierValue)+' across related contracts';
+ const pwbgAmountLakh=Math.max(0,Number($('pwbgAmount').value)||0);
+ const aggregateShortfall=currentIC+1e-9<threshold;
+ const indianMfgUnresolved=!indianMfgAudited;
+ const potentialFailure=aggregateShortfall||indianMfgEvidencedShortfall;
+ const potentialICHold=thresholdApplies&&(potentialFailure||indianMfgUnresolved)?grossContract*0.05:0;
+ const potentialPWBG=thresholdApplies&&(potentialFailure||indianMfgUnresolved)?pwbgAmountLakh:0;
+ const evidenceICHold=thresholdApplies&&evidenceIC+1e-9<threshold?grossContract*0.05:0;
+ $('icHoldExposure').textContent=thresholdApplies?formatInrCr(potentialICHold):'Not applicable';
+ $('icHoldNote').textContent=thresholdApplies?(indianMfgUnresolved&&!aggregateShortfall?'Unresolved evidence: potential exposure only if mandatory IC cannot be certified':(potentialFailure?'Contingent exposure if mandatory IC is not certified / achieved':'No indicated shortfall on entered values')):'No DAP IC floor in the selected foreign-vendor category';
+ $('pwbgExposure').textContent=thresholdApplies?formatInrLakh(potentialPWBG):'Not applicable';
+ $('pwbgNote').textContent=thresholdApplies?(potentialPWBG>0?'Potential only; depends on verification and final contractual determination':'No indicated shortfall on entered values'):'No DAP IC floor in the selected foreign-vendor category';
+ $('verifiedForeignOut').textContent=verified.toFixed(0)+'%';
+ $('baseIC').textContent=pct(currentIC);$('verifiedIC').textContent=pct(evidenceIC);
+ setStatus($('baseStatus'),currentIC,threshold,thresholdApplies);setStatus($('verifiedStatus'),evidenceIC,threshold,thresholdApplies);
+ $('baseICOut').textContent=pct(currentIC);$('verifiedICOut').textContent=pct(evidenceIC);
+ $('baseBar').style.width=Math.max(0,Math.min(100,currentIC))+'%';$('verifiedBar').style.width=Math.max(0,Math.min(100,evidenceIC))+'%';
+ $('evidenceValue').textContent=formatInrCr(evidenceValueCr);
+ $('evidenceValueNote').textContent=(evidenceIC-currentIC>=0?'+':'')+(evidenceIC-currentIC).toFixed(1)+' percentage-point arithmetic change; not recognised unless accepted.';
+ $('remainingDomesticValue').textContent=thresholdApplies?formatInrCr(evidenceGapCr):'Not applicable';
+ $('remainingDomesticNote').textContent=!thresholdApplies?'No IC floor applies to this category for a foreign vendor':(evidenceGapCr>0?'Additional eligible domestic value still needed after evidence':'No additional substitution needed in this evidence scenario');
+ $('currentSourcingPremium').textContent=thresholdApplies?(Number.isFinite(currentPremiumCr)?formatInrLakh(currentPremiumCr*100):'Not feasible at selected local foreign share'):'Not applicable';
+ $('evidenceSourcingPremium').textContent=thresholdApplies?(Number.isFinite(evidencePremiumCr)?formatInrLakh(evidencePremiumCr*100):'Not feasible at selected local foreign share'):'Not applicable';
+ $('maxEvidenceBudget').textContent=thresholdApplies?(Number.isFinite(maxEvidenceBudgetLakh)?formatInrLakh(maxEvidenceBudgetLakh):'Not feasible'):'Not applicable';
+ $('evidenceVsSourcing').textContent=!thresholdApplies?'Not applicable':(Number.isFinite(netEvidenceVsLocalLakh)?(netEvidenceVsLocalLakh<0?'−':(netEvidenceVsLocalLakh>0?'+':''))+formatInrLakh(Math.abs(netEvidenceVsLocalLakh)):'Not feasible');
+ $('evidenceVsSourcing').style.color=!Number.isFinite(netEvidenceVsLocalLakh)?'var(--amber)':(netEvidenceVsLocalLakh>=0?'var(--teal)':'var(--red)');
+ $('evidenceVsSourcingNote').textContent=thresholdApplies?'Maximum affordable evidence cost less the entered verification quote; scenario estimate':'No IC threshold applies in the selected category';
+ let decision;
+ if(vendorEligibility==='notEligible') decision='The selected vendor is marked ineligible for this procurement category. An IC calculation cannot cure vendor-category ineligibility; reassess the procurement route or lawful operating structure before relying on the threshold result.';
+ else if(thresholdApplies&&!indianMfgPass) decision='Overall IC alone does not establish compliance. Indian-manufacture status is '+(!indianMfgAudited?'unknown / unverified':(indianMfgEvidencedShortfall?'an evidenced shortfall of '+formatInrCr(indianMfgGapCr):'provisional only; competent-authority acceptance is not recorded'))+'. Do not treat missing or unaccepted evidence as a proven legal failure.';
+ else if(!thresholdApplies) decision='No DAP IC floor applies to this foreign-vendor category. Check RFP, offsets and other contractual obligations; this calculator does not imply zero localisation obligations.';
+ else if(vendorEligibility==='notChecked') decision='First confirm vendor and RFP eligibility with the procurement / legal team. The IC arithmetic is indicative only; do not treat a threshold pass as proof of category eligibility. '+(currentIC>=threshold?'The current IC estimate meets the selected percentage.':'The current IC estimate is below the selected percentage.');
+ else if(currentIC>=threshold) decision='No immediate IC gap under the current 90% estimate. Preserve tier-level evidence and test the position against the RFP before incurring remediation cost.';
+ else if(evidenceIC>=threshold && evidenceRouteAccepted && netEvidenceVsLocalLakh>0) decision='The selected evidence route is marked accepted in this scenario and clears aggregate IC; compare its entered verification cost with incremental local-sourcing cost. Confirm supplier-level scope and the separate Indian-manufacture requirement.';
+ else if(evidenceIC>=threshold) decision='The evidence scenario clears aggregate IC arithmetically, but the selected route is not recorded as authority-accepted. Treat this as a sensitivity case, not recognised compliance.';
+ else if(evidenceGapCr>0 && Number.isFinite(evidencePremiumCr)) decision='Evidence alone does not clear the threshold. Combine substantiated evidence with residual local sourcing, or examine an expressly approved RFP / AoN threshold adjustment where DAP permits it.';
+ else decision='Evidence alone does not clear the threshold and the selected local supply assumptions cannot close the residual gap. Revisit the supply base, technical scope or approved procurement category.';
+ $('icDecision').textContent='Decision guidance: '+decision;
+ let flip;
+ if(!thresholdApplies) flip='No DAP IC minimum is stipulated for the selected foreign-vendor category. Check any offset, RFP or contract-specific obligations separately.';
+ else if(currentIC<threshold&&evidenceIC>=threshold) flip='Evidence scenario crosses the selected threshold: current IC is '+(threshold-currentIC).toFixed(1)+' pp short; evidence IC is '+(evidenceIC-threshold).toFixed(1)+' pp above it.';
+ else if(currentIC>=threshold&&evidenceIC>=threshold) flip='Both scenarios meet the selected threshold. Evidence changes the calculated IC by '+(evidenceIC-currentIC).toFixed(1)+' pp.';
+ else if(currentIC<threshold&&evidenceIC<threshold) flip='Evidence improves IC by '+(evidenceIC-currentIC).toFixed(1)+' pp, but '+(threshold-evidenceIC).toFixed(1)+' pp remain. Estimated domestic value still required: '+formatInrCr(evidenceGapCr)+'.';
+ else flip='The verified-content scenario changes IC by '+(evidenceIC-currentIC).toFixed(1)+' pp; review the source records and RFP threshold.';
+ $('flipPoint').textContent=flip;
+ $('mathNote').textContent='Base: '+formatInrCr(baseCr)+'; “Others” spend: '+formatInrCr(othersSpendCr)+'. The current 90% presumption treats '+formatInrCr(othersSpendCr*.9)+' of “Others” as foreign content. The evidence scenario treats '+formatInrCr(othersSpendCr*verified/100)+' as foreign. The existing DAP Appendix B para. 5 import-certification provision is distinct from the proposed enhanced protocol. This evidence case changes the arithmetic only; recognised treatment requires the applicable route, records and procurement-authority decision. The Indian-manufacture sub-test is separately evidence-gated. The vendor / RFP eligibility gate is separate from this percentage calculation. DAP Appendix B requires named tier reporting for a tier supplier whose aggregated contracts linked to the prime contract exceed the lower of ₹10 crore or 5% of the prime Base Contract Price; supplies from balance-tier suppliers and components bought through traders, stockists or local agents of foreign suppliers are included under ‘Others’ at the prescribed estimated rate. The selected supplier test is a screen only: the prime vendor must aggregate all related contracts and classify traders / agents correctly under the actual facts. Where mandatory IC cannot be certified, DAP Appendix B provides for a conditional 5% of contract value to be withheld pending verification; if IC is still not achieved after verification, the withheld amount and applicable PWBG may be forfeited. The displayed amounts are contingent exposures, not automatic deductions. The local-sourcing alternative calculates only incremental domestic credit over the displaced “Others” credit. It separately tests qualifying Indian manufacture. The replacement supplier has '+(localSupplierForeign*100).toFixed(0)+'% foreign content; gross purchases must therefore exceed the domestic-value gap. The premium is charged only on that estimated replacement spend.';
+ if(typeof updateFinancials==='function') updateFinancials();
+}
+$('component').addEventListener('change',()=>{updateComponent();updateRoute()});$('route').addEventListener('change',updateRoute);$('pilotApplication').addEventListener('change',updateComponent);
+['offsetScreen','replacementSource','docForeign','othersShare','verifiedForeign','indianMfgShare','indianMfgEvidence','evidenceRoute','evidenceRouteStatus','localIndianMfgShare','category','contractValue','taxDuties','bneExcluded','supportExcluded','tierSupplierValue','pwbgAmount','makePortion','thresholdSource','customThreshold','vendorEligibility','domesticPremium','localSupplierForeign','verificationCost'].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener('input',updateCalc);el.addEventListener('change',updateCalc)});
+updateComponent();updateRoute();updateCalc();
+
+function formatMoneyM(value){const sign=value<0?'−':(value>0?'+':'');return sign+'€'+Math.abs(value).toFixed(2)+'M'}
+function formatInrCrFromEurM(value,exchangeRate){const cr=value*exchangeRate/10,sign=cr<0?'−':'';return sign+'₹'+Math.abs(cr).toFixed(1)+' Cr'}
+function updateFinancials(){
+ const contractInrCr=Math.max(0,Number($('contractValue').value)||0);
+ const exchangeRate=Math.max(1,Number($('exchangeRate').value)||90);
+ const targetMargin=Math.max(0,Number($('baseMargin').value)||0)/100;
+ const delayMonths=Math.max(0,Number($('delayMonths').value)||0);
+ const wacc=Math.max(0,Number($('wacc').value)||0)/100;
+ const fundedShare=Math.max(0,Math.min(100,Number($('capitalExposure').value)||0))/100;
+ const phaseMultiplier=Math.max(0,Number($('phaseCapitalMultiplier').value)||1);
+ const jvPartnerFundingShare=Math.max(0,Math.min(100,Number($('jvPartnerFundingShare').value)||0))/100;
+ const hedgeTenorMonths=Math.max(0,Number($('hedgeTenorMonths').value)||0);
+ const hedgeRollPenaltyRate=Math.max(0,Number($('hedgeRollPenalty').value)||0)/100;
+ const nreQualificationCost=Math.max(0,Number($('nreQualificationCost').value)||0);
+ const fxDep=Number($('fxDepreciation').value||0)/100;
+ const inrRevenueShare=Math.max(0,Math.min(100,Number($('inrRevenueShare').value)||0))/100;
+ const inrCostShare=Math.max(0,Math.min(100,Number($('inrCostShare').value)||0))/100;
+ const hedgeCoverage=Math.max(0,Math.min(100,Number($('fxHedgeCoverage').value)||0))/100;
+ const hedgeCostRate=Math.max(0,Number($('fxHedgeCost').value)||0)/100;
+ const expectedLD=Math.max(0,Number($('expectedLD').value)||0);
+ const jvMode=$('jvScenario').value;
+ const jvProfitPoolShare=Math.max(0,Math.min(100,Number($('jvProfitPoolShare').value)||0))/100;
+ const localPartnerShare=Math.max(0,Math.min(100,Number($('jvDilution').value)||0))/100;
+ const expediteCostAtCurrent=Math.max(0,Number($('expediteCost').value)||0);
+ const useLocalFallback=$('sourceRemediation').value==='on';
+ const policyLever=$('policyLever').value;
+ const icEvidenceLever=policyLever==='icEvidence'||policyLever==='combined';
+ const assuranceAcceptedForScenario=selectedPilotScopeEligible&&$('pilotApplication').value==='eligible'&&$('assurancePilotAcceptance')?.value==='accepted';
+ const assuranceScopeExcluded=(policyLever==='assurance'||policyLever==='combined')&&!assuranceAcceptedForScenario;
+ const addressableDelayShare=Math.max(0,Math.min(100,Number($('addressableDelayShare').value)||0))/100;
+ const delayReduction=Math.max(0,Math.min(100,Number($('delayReduction').value)||0))/100;
+ const licensingAccepted=$('licensingScopeStatus').value==='controlledConfirmed';
+ const delayLeverApplies=policyLever==='licensing'?licensingAccepted:(policyLever==='assurance'?assuranceAcceptedForScenario:(policyLever==='combined'&&(licensingAccepted||assuranceAcceptedForScenario)));
+ const effectiveDelayReduction=delayLeverApplies?addressableDelayShare*delayReduction:0;
+ const pAdopt=Math.max(0,Math.min(100,Number($('policyProb').value)||0))/100;
+ const pEffective=Math.max(0,Math.min(100,Number($('policyEffectiveness').value)||0))/100;
+ const readinessCost=Math.max(0,Number($('readinessCost').value)||0);
+
+ const contractEurM=(contractInrCr*10)/exchangeRate;
+ const baseProfitEurM=contractEurM*targetMargin;
+ const costBaseEurM=contractEurM*(1-targetMargin);
+ const thresholdApplies=contractICState.thresholdApplies;
+ const currentICBelow=thresholdApplies && contractICState.current+1e-9<contractICState.threshold;
+ const evidenceICBelow=thresholdApplies && contractICState.evidence+1e-9<contractICState.threshold;
+ // A failed Indian-manufacture sub-test is a separate compliance shortfall even when overall IC passes.
+ // In the selected illustrative IC-linked JV scenario, either shortfall keeps the JV response in place.
+ const indianMfgSubtestFailed=thresholdApplies && contractICState.indianMfgEvidencedShortfall===true;
+ const indianMfgSubtestUnknown=thresholdApplies && contractICState.indianMfgAudited!==true;
+ const currentDAPNonCompliant=currentICBelow||indianMfgSubtestFailed;
+ const evidenceDAPNonCompliant=evidenceICBelow||indianMfgSubtestFailed;
+ const complianceUnresolved=indianMfgSubtestUnknown||contractICState.vendorEligibility!=='confirmed';
+ // IC-evidence benefits unlock only when procurement / legal eligibility and the Indian-manufacture sub-test both pass.
+ const icEvidenceEffective=icEvidenceLever&&thresholdApplies&&contractICState.vendorEligibility==='confirmed'&&contractICState.evidenceRouteAccepted&&contractICState.indianMfgPass;
+ const icEvidenceBlocked=icEvidenceLever&&!icEvidenceEffective;
+ const icEvidenceBlockMessage=!thresholdApplies
+  ?'IC-evidence benefits are not credited because the selected category has no applicable IC floor in this model.'
+  :contractICState.vendorEligibility!=='confirmed'
+   ?'IC-evidence benefits are withheld until vendor and RFP eligibility are confirmed.'
+   :!contractICState.evidenceRouteAccepted
+    ?'IC-evidence benefits are withheld because the selected evidence route is not recorded as accepted by the competent authority.'
+   :!contractICState.indianMfgPass
+    ?'IC-evidence benefits are withheld because the separate Indian-manufacture sub-test is not authority-accepted as met.'
+    :'';
+ const jvCurrent=jvMode==='always'||(jvMode==='ic'&&currentDAPNonCompliant);
+ const jvPolicy=jvMode==='always'||(jvMode==='ic'&&(icEvidenceEffective?evidenceDAPNonCompliant:currentDAPNonCompliant));
+ const policyLocalPremiumCr=icEvidenceEffective?contractICState.evidencePremiumCr:contractICState.currentPremiumCr;
+ const localFallbackUnavailable=useLocalFallback&&(!Number.isFinite(contractICState.currentPremiumCr)||!Number.isFinite(policyLocalPremiumCr));
+ const localCurrentEurM=useLocalFallback&&Number.isFinite(contractICState.currentPremiumCr)?(contractICState.currentPremiumCr*10/exchangeRate):0;
+ const localPolicyEurM=useLocalFallback&&Number.isFinite(policyLocalPremiumCr)?(policyLocalPremiumCr*10/exchangeRate):0;
+ const fundingGapBeforeJV=Math.min(contractEurM,contractEurM*fundedShare*phaseMultiplier);
+ const verificationCostEurM=icEvidenceEffective?(contractICState.verificationCostLakh*0.1)/exchangeRate:0;
+
+ function fxAtDelay(months){
+  const delayedRate=exchangeRate*Math.pow(1+fxDep,months/12);
+  const depreciationFactor=1-(exchangeRate/delayedRate);
+  const revenueTranslationLoss=contractEurM*inrRevenueShare*depreciationFactor;
+  const inrCostTranslationBenefit=costBaseEurM*inrCostShare*depreciationFactor;
+  const netBeforeHedge=revenueTranslationLoss-inrCostTranslationBenefit;
+  const adverseNet=Math.max(0,netBeforeHedge);
+  const hedgedNotional=Math.abs(netBeforeHedge)*hedgeCoverage;
+  const initialHedgeCost=hedgedNotional*hedgeCostRate;
+  const rollMonths=Math.max(0,months-hedgeTenorMonths);
+  const hedgeRollCost=hedgedNotional*hedgeRollPenaltyRate*rollMonths;
+  const hedgeCost=initialHedgeCost+hedgeRollCost;
+  const netFxImpact=netBeforeHedge>=0?netBeforeHedge*(1-hedgeCoverage)+hedgeCost:netBeforeHedge*(1-hedgeCoverage)-hedgeCost;
+  return {delayedRate,revenueTranslationLoss,inrCostTranslationBenefit,netBeforeHedge,hedgeCost,initialHedgeCost,hedgeRollCost,rollMonths,netFxImpact};
+ }
+ function jvLoss(profit,enabled){return enabled&&profit>0?profit*jvProfitPoolShare*localPartnerShare:0}
+ function scenario(months,applyPolicyScenario,applyVerification){
+  const fx=fxAtDelay(months);
+  const jvEnabled=applyVerification?jvPolicy:jvCurrent;
+  const partnerCapitalOffsetShare=jvEnabled?jvPartnerFundingShare:0;
+  const scenarioFundingGapEurM=fundingGapBeforeJV*(1-partnerCapitalOffsetShare);
+  const waccCost=scenarioFundingGapEurM*wacc*(months/12);
+  const ldCost=delayMonths>0?expectedLD*(months/delayMonths):0;
+  const expediteCost=delayMonths>0?expediteCostAtCurrent*(months/delayMonths):0;
+  const localCost=useLocalFallback?((applyPolicyScenario?localPolicyEurM:localCurrentEurM)+nreQualificationCost):0;
+  // Verification cost is excluded from project contribution here and deducted once in expected value below.
+  const preJV=baseProfitEurM-fx.netFxImpact-waccCost-ldCost-expediteCost-localCost;
+  const share=jvLoss(preJV,jvEnabled);
+  return {fx,waccCost,ldCost,expediteCost,localCost,preJV,jvEnabled,scenarioFundingGapEurM,partnerCapitalOffsetShare,jvLoss:share,netProfit:preJV-share};
+ }
+ const current=scenario(delayMonths,false,false);
+ const policyDelay=delayMonths*(1-effectiveDelayReduction);
+ // Policy case assumes the evidence route is adopted. If it clears the IC test in Section 03,
+ // the IC-contingent JV can be avoided; other commercial JVs remain in place.
+ const policy=scenario(policyDelay,true,true);
+ const conditionalBenefit=policy.netProfit-current.netProfit;
+ // Readiness spend is paid now regardless of adoption. Verification cost is incurred only if
+ // the route is adopted; operational effectiveness determines whether the project benefit occurs.
+ const expectedNetValue=pAdopt*(pEffective*conditionalBenefit-verificationCostEurM)-readinessCost;
+ const expectedGrossBenefit=pAdopt*pEffective*conditionalBenefit;
+ const breakEvenDenominator=pEffective*conditionalBenefit-verificationCostEurM;
+ const breakEvenAdoption=breakEvenDenominator>0?readinessCost/breakEvenDenominator*100:null;
+ const margin=current.netProfit/contractEurM*100;
+
+ // Input readouts
+ $('delayMonthsOut').textContent=delayMonths;
+ $('waccOut').textContent=(wacc*100).toFixed(1)+'%';
+ $('capitalExposureOut').textContent=(fundedShare*100).toFixed(0)+'%';
+ $('phaseCapitalMultiplierOut').textContent=phaseMultiplier.toFixed(2)+'×';
+ $('jvPartnerFundingShareOut').textContent=(jvPartnerFundingShare*100).toFixed(0)+'%';
+ $('fxDepreciationOut').textContent=(fxDep*100).toFixed(1)+'%';
+ $('inrRevenueShareOut').textContent=(inrRevenueShare*100).toFixed(0)+'%';
+ $('inrCostShareOut').textContent=(inrCostShare*100).toFixed(0)+'%';
+ $('fxHedgeCoverageOut').textContent=(hedgeCoverage*100).toFixed(0)+'%';
+ $('fxHedgeCostOut').textContent=(hedgeCostRate*100).toFixed(1)+'%';
+ $('jvProfitPoolShareOut').textContent=(jvProfitPoolShare*100).toFixed(0)+'%';
+ $('jvDilutionOut').textContent=(localPartnerShare*100).toFixed(0)+'%';
+ $('addressableDelayShareOut').textContent=(addressableDelayShare*100).toFixed(0)+'%';
+ $('delayReductionOut').textContent=(delayReduction*100).toFixed(0)+'%';
+ $('policyProbOut').textContent=(pAdopt*100).toFixed(0)+'%';
+ $('policyEffectivenessOut').textContent=(pEffective*100).toFixed(0)+'%';
+
+ // Core results
+ $('baseProfitEur').textContent=formatMoneyM(baseProfitEurM);
+ $('baseProfitInr').textContent=formatInrCrFromEurM(baseProfitEurM,exchangeRate);
+ $('fxLossEur').textContent=formatMoneyM(-current.fx.netFxImpact);
+ $('fxLossRate').textContent='Delayed rate: ₹'+current.fx.delayedRate.toFixed(2)+' / € · INR cost offset: '+formatMoneyM(current.fx.inrCostTranslationBenefit)+' · hedge roll: '+formatMoneyM(current.fx.hedgeRollCost)+' over '+current.fx.rollMonths+' month(s)';
+ $('waccLossEur').textContent='−€'+current.waccCost.toFixed(2)+'M';
+ $('waccLossEur').title='Funding gap: '+formatMoneyM(current.scenarioFundingGapEurM)+' after phase multiplier '+phaseMultiplier.toFixed(2)+'× and explicit JV partner cash funding share '+(current.partnerCapitalOffsetShare*100).toFixed(0)+'%.';
+ $('waccLossEur').title='Funding gap: '+formatMoneyM(current.scenarioFundingGapEurM)+' after phase multiplier '+phaseMultiplier.toFixed(2)+'× and explicit JV partner cash funding share '+(current.partnerCapitalOffsetShare*100).toFixed(0)+'%.';
+ $('ldCostEur').textContent='−€'+(current.ldCost+current.expediteCost).toFixed(2)+'M';
+ $('jvCostEur').textContent='−€'+current.jvLoss.toFixed(2)+'M';
+ $('jvStatus').textContent=current.jvEnabled?'Partner receives '+(localPartnerShare*100).toFixed(0)+'% of JV distributable profit; separately funds '+(current.partnerCapitalOffsetShare*100).toFixed(0)+'% of relevant cash gap.':'No JV profit share / partner funding offset in current scenario.';
+ $('localSourcingCostEur').textContent=localFallbackUnavailable?'Not feasible':'−€'+current.localCost.toFixed(2)+'M';
+ $('netProfitEur').textContent=localFallbackUnavailable?'Not comparable':formatMoneyM(current.netProfit);
+ $('netProfitInr').textContent=localFallbackUnavailable?'Selected local supply cannot close the IC gap':'Base-FX equivalent: '+formatInrCrFromEurM(current.netProfit,exchangeRate);
+ $('policySavingsEur').textContent=localFallbackUnavailable?'Not comparable':(expectedNetValue<0?'−':expectedNetValue>0?'+':'')+'€'+Math.abs(expectedNetValue).toFixed(2)+'M';
+ $('policySavingsEur').style.color=localFallbackUnavailable?'var(--amber)':(expectedNetValue<0?'var(--red)':'var(--teal)');
+ $('conditionalPolicyBenefit').textContent=localFallbackUnavailable?'Not comparable':formatMoneyM(conditionalBenefit);
+ $('breakEvenAdoption').textContent=breakEvenAdoption===null?'Not achievable at selected assumptions':(breakEvenAdoption>100?breakEvenAdoption.toFixed(0)+'% (>100%)':breakEvenAdoption.toFixed(1)+'%');
+ $('mitigatedProfitEur').textContent=localFallbackUnavailable?'Not feasible':formatMoneyM(policy.netProfit);
+ $('mitigatedDetail').textContent='Lever: '+policyLever+'; addressable delay '+(addressableDelayShare*100).toFixed(0)+'%; reduction within that share '+(delayReduction*100).toFixed(0)+'%; resulting delay '+policyDelay.toFixed(1)+' months; evidence cost '+formatMoneyM(verificationCostEurM)+' is deducted once in expected value; local sourcing fallback '+formatMoneyM(policy.localCost)+'.';
+ $('policyValueNote').textContent=(assuranceScopeExcluded?'DGAQA evidence-reuse is excluded for this selected component / application and is not counted in the combined package. ':'')+(icEvidenceBlocked?icEvidenceBlockMessage+' ':'')+(localFallbackUnavailable?'Local sourcing scenario infeasible. ':'')+(licensingAccepted?'Licensing scope confirmed for scenario. ':'Licensing benefit not credited without controlled-transfer confirmation. ')+(assuranceAcceptedForScenario?'DGAQA pilot acceptance assumed. ':'DGAQA pilot benefit not credited without formal pilot acceptance. ')+'Delay-related FX / economic capital charge / LD and expediting effects from eligible licensing or assurance levers are modelled as one package effect; they are not evidence of DAP IC compliance. '+'Lever: '+policyLever+'; addressable delay '+(addressableDelayShare*100).toFixed(0)+'%. '+(pAdopt*100).toFixed(0)+'% adoption × '+(pEffective*100).toFixed(0)+'% effectiveness; gross expected benefit '+formatMoneyM(expectedGrossBenefit)+'; verification cost on adoption '+formatMoneyM(verificationCostEurM)+'; readiness cost '+formatMoneyM(readinessCost)+'. These shared probabilities and delay assumptions are user-defined scenario inputs, not calibrated estimates; combined mode treats the selected delay reduction as one non-overlapping package effect.';
+ const status=$('netMarginStatus');status.textContent=localFallbackUnavailable?'Local sourcing fallback infeasible':'Contribution ratio: '+margin.toFixed(1)+'% of spot-value contract';status.className=localFallbackUnavailable?'flag':(margin<0?'flag':(margin<targetMargin*100?'flag amber':'flag green'));
+}
+['contractValue','exchangeRate','baseMargin','delayMonths','wacc','capitalExposure','delayPhase','phaseCapitalMultiplier','hedgeTenorMonths','hedgeRollPenalty','jvPartnerFundingShare','nreQualificationCost','fxDepreciation','inrRevenueShare','inrCostShare','fxHedgeCoverage','fxHedgeCost','expectedLD','expediteCost','licensingScopeStatus','assurancePilotAcceptance','jvScenario','jvProfitPoolShare','jvDilution','sourceRemediation','policyLever','addressableDelayShare','delayReduction','policyProb','policyEffectiveness','readinessCost'].forEach(id=>{
+ const el=$(id);if(!el)return;el.addEventListener('input',updateFinancials);el.addEventListener('change',updateFinancials);
+});
+
+// Capture the page-load state so the user can always return to the neutral baseline.
+const neutralBaseline = new Map(
+ [...document.querySelectorAll('input, select')].map(el => [el.id, el.value])
+);
+const executiveStressPreset = {
+ // DAP / IC assumptions
+ category:'buyIndianOther', vendorEligibility:'confirmed', thresholdSource:'category', evidenceRoute:'enhanced', evidenceRouteStatus:'accepted', indianMfgEvidence:'accepted', licensingScopeStatus:'controlledConfirmed',
+ contractValue:'900', docForeign:'25', othersShare:'30', verifiedForeign:'35',
+ domesticPremium:'10', localSupplierForeign:'25', indianMfgShare:'30', verificationCost:'100',
+ // Financial and commercial stress assumptions
+ exchangeRate:'90', baseMargin:'12', delayMonths:'9', wacc:'8', capitalExposure:'60', delayPhase:'late', phaseCapitalMultiplier:'1.5', hedgeTenorMonths:'6', hedgeRollPenalty:'0.15', nreQualificationCost:'2.0', jvPartnerFundingShare:'0',
+ fxDepreciation:'3', inrRevenueShare:'100', inrCostShare:'75',
+ fxHedgeCoverage:'50', fxHedgeCost:'0.5', expectedLD:'1.5',
+ jvScenario:'ic', jvProfitPoolShare:'50', jvDilution:'51', sourceRemediation:'off',
+ // The demonstration now clears the 50%-of-stipulated-IC Indian-manufacture sub-test:
+ // 30% of ₹900 Cr = ₹270 Cr, equal to 50% of the 60% IC requirement.
+ // Policy value assumptions
+ policyLever:'combined', addressableDelayShare:'50', delayReduction:'50',
+ policyProb:'30', policyEffectiveness:'70', readinessCost:'0.10'
+};
+let stressPresetActive = false;
+function setSelectedPreset(which){
+ const apply=$('applyStressPreset'), reset=$('resetNeutralBaseline');
+ apply.classList.toggle('is-selected',which==='stress');
+ reset.classList.toggle('is-selected',which==='neutral');
+ apply.setAttribute('aria-pressed',String(which==='stress'));
+ reset.setAttribute('aria-pressed',String(which==='neutral'));
+}
+setSelectedPreset('neutral');
+function setPresetValues(values){
+ Object.entries(values).forEach(([id,value])=>{
+  const el=$(id);
+  if(el) el.value=String(value);
+ });
+ updateComponent();
+ updateRoute();
+ updateCalc();
+ updateFinancials();
+}
+$('delayPhase').addEventListener('change',()=>{
+ const suggested={early:'0.50',mixed:'1.00',late:'1.50'};
+ $('phaseCapitalMultiplier').value=suggested[$('delayPhase').value]||'1.00';
+ updateFinancials();
+});
+$('applyStressPreset').addEventListener('click',()=>{
+ setPresetValues(executiveStressPreset);
+ stressPresetActive=true;
+ setSelectedPreset('stress');
+ $('presetStatus').textContent='Illustrative stress test applied. Vendor / RFP eligibility, acceptance of the proposed enhanced evidence protocol and acceptance of the Indian-manufacture evidence are explicit scenario assumptions—not actual authority decisions. The IC-linked JV and delay-cost assumptions are also hypothetical. Edit any input to test alternatives.';
+});
+function returnToNeutralBaseline(){
+ neutralBaseline.forEach((value,id)=>{
+  const el=$(id);
+  if(el) el.value=value;
+ });
+ updateComponent();
+ updateRoute();
+ updateCalc();
+ updateFinancials();
+ stressPresetActive=false;
+ setSelectedPreset('neutral');
+ $('presetStatus').textContent='Neutral baseline restored. Evidence and eligibility remain unverified; no compliance pass or JV is assumed. All financial and policy assumptions return to their page-load values.';
+}
+document.addEventListener('click',event=>{
+ const button=event.target?.closest?.('#resetNeutralBaseline');
+ if(button){ event.preventDefault(); returnToNeutralBaseline(); }
+});
+['input','change'].forEach(eventName=>{
+ document.querySelectorAll('input, select').forEach(el=>{
+  el.addEventListener(eventName,()=>{
+   if(stressPresetActive){
+    setSelectedPreset(null);
+    $('presetStatus').textContent='Custom scenario: one or more assumptions have been changed from the executive stress-test preset. All outputs recalculate from the current inputs.';
+   }
+  });
+ });
+});
+updateFinancials();
+</script>
+</body></html>
